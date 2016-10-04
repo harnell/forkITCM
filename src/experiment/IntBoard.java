@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import ClueGame.BoardCell;
+
 
 public class IntBoard {
 	private BoardCell [][] board;
