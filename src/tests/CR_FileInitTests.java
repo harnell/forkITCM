@@ -14,9 +14,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.DoorDirection;
+import ClueGame.Board;
+import ClueGame.BoardCell;
+import ClueGame.DoorDirection;
 
 public class CR_FileInitTests {
 	// Constants that I will use to test whether the file was loaded correctly
@@ -90,8 +90,8 @@ public class CR_FileInitTests {
 	public void testNumberOfDoorways() 
 	{
 		int numDoors = 0;
-		for (int row=0; row<board.getNumRows(); row++)
-			for (int col=0; col<board.getNumColumns(); col++) {
+		for (int row=0; row < board.getNumRows(); row++)
+			for (int col=0; col < board.getNumColumns(); col++) {
 				BoardCell cell = board.getCellAt(row, col);
 				if (cell.isDoorway())
 					numDoors++;
