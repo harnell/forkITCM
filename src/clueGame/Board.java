@@ -1,4 +1,4 @@
-package ClueGame;
+package clueGame;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.zip.InflaterOutputStream;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
@@ -37,12 +38,12 @@ public class Board {
 		try{
 			loadRoomConfig();
 			loadBoardConfig();
-		}catch(FileNotFoundException e){
+		}catch(FileNotFoundException | BadConfigFormatException e){
 			e.printStackTrace();
 		}
 			
 	}
-	public void loadRoomConfig() throws FileNotFoundException{	
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException{	
 		
 		FileReader reader = new FileReader(roomConfigFile);
 		
@@ -54,10 +55,13 @@ public class Board {
 			String info[] = line.split(", ");
 			rooms.put(info[0].charAt(0), info[1]);
 			System.out.println(info[0].charAt(0));
+			if(!(info[2].equals("Card")) || !(info[2].equals("Other"))) { //Check if config file has proper formatting
+				throw new BadConfigFormatException("Config file not in proper format");
+			}
 		}
 		in.close();
 	}
-	public void loadBoardConfig() throws FileNotFoundException {
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 	
 		FileReader reader = new FileReader(boardConfigFile);
 		
@@ -71,10 +75,24 @@ public class Board {
 			numColumns = info.length;
 			for (int i = 0; i < info.length; i++) {
 				board[lineNumber][i] = new BoardCell(lineNumber, i, info[i]);
+				//Throw exception if room is not contained in legend
+				if(!rooms.containsKey(info[i].charAt(0))){ 
+					throw new BadConfigFormatException("Room is not defined in the legend.");
+				}
 			}
 			lineNumber++;
 		}
 		numRows = lineNumber;
+		for (int i = 0; i < numRows; i++) {
+			int j = 0;
+			while(board[i][j] != null){
+				j++;
+			}
+			//Throw exception if all of the columns are not the same length
+			if(j != numColumns){
+				throw new BadConfigFormatException("Number of columns are not consistent for all rows.");
+			}
+		}
 		in.close();
 	}
 	

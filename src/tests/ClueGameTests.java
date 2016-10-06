@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ClueGame.Board;
-import ClueGame.BoardCell;
-import ClueGame.DoorDirection;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.DoorDirection;
 
 public class ClueGameTests {
 	public static final int LEGEND_SIZE = 11;
