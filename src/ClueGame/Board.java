@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import experiment.BoardCell;
-
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final int NUM_ROWS = 22;
