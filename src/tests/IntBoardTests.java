@@ -143,7 +143,6 @@ public class IntBoardTests {
 		gameBoard.calcTargets(cell, 3);
 		Set targets = gameBoard.getTargets();
 		assertEquals(4, targets.size());
-		System.out.println("adasdad");
 		assertTrue(targets.contains(gameBoard.getCell(3, 0)));
 		assertTrue(targets.contains(gameBoard.getCell(0, 1)));
 		assertTrue(targets.contains(gameBoard.getCell(1, 0)));

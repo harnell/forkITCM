@@ -16,6 +16,7 @@ public class Board {
 	private Map<Character, String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
+	private Set<BoardCell> visited;
 	private String boardConfigFile;
 	private String roomConfigFile;
 
@@ -58,7 +59,20 @@ public class Board {
 		adjMatrix.put(cell, tempCells);
 	}
 	public void calcTargets(BoardCell cell, int pathLength) {
-
+		visited.add(cell);
+		Set<BoardCell> adjacents = getAdjList(cell);
+		for (BoardCell adjCell : adjacents) {
+			if(!visited.contains(adjCell)){
+				visited.add(adjCell);
+				if(pathLength == 1){
+					targets.add(adjCell);
+				} 
+				else {
+					calcTargets(adjCell, pathLength - 1);
+				}
+				visited.remove(adjCell);
+			}
+		}
 	}
 	public void setConfigFiles(String string, String string2) {
 		// TODO Auto-generated method stub
