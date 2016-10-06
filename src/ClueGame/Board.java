@@ -12,8 +12,8 @@ public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final int NUM_ROWS = 22;
 	private static final int NUM_COLS = 21;
-	private int numRows;
-	private int numColumns;
+	private int numRows = 0;
+	private int numColumns = 0;
 	private BoardCell[][] board;
 	private Map<Character, String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
@@ -42,8 +42,8 @@ public class Board {
 		}
 			
 	}
-	public void loadRoomConfig() throws FileNotFoundException{
-		roomConfigFile = "Legend.txt";	
+	public void loadRoomConfig() throws FileNotFoundException{	
+		
 		FileReader reader = new FileReader(roomConfigFile);
 		
 		rooms = new HashMap<Character, String>();
@@ -57,7 +57,7 @@ public class Board {
 		in.close();
 	}
 	public void loadBoardConfig() throws FileNotFoundException {
-		boardConfigFile = "BoardLayout.csv";
+	
 		FileReader reader = new FileReader(boardConfigFile);
 		
 		board = new BoardCell[NUM_ROWS][NUM_COLS];
@@ -67,13 +67,14 @@ public class Board {
 		while(in.hasNextLine()){
 			String line = in.nextLine();
 			String info[] = line.split(",");
+			numColumns = info.length;
 			for (int i = 0; i < info.length; i++) {
 				board[lineNumber][i] = new BoardCell(lineNumber, i);
 				board[lineNumber][i].setInitial(info[i]);
 			}
 			lineNumber++;
 		}
-		
+		numRows = lineNumber;
 		in.close();
 	}
 	
@@ -120,24 +121,20 @@ public class Board {
 	}
 	
 	public void setConfigFiles(String string, String string2) {
-		// TODO Auto-generated method stub
-		
+		roomConfigFile = string2;
+		boardConfigFile = string;		
 	}
 	public Map<Character, String> getLegend() {
-		// TODO Auto-generated method stub
-		return null;
+		return rooms;
 	}
 	public int getNumRows() {
-		// TODO Auto-generated method stub
-		return (Integer) null;
+		return numRows;
 	}
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
-		return (Integer) null;
+		return numColumns;
 	}
 	public BoardCell getCellAt(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+		return board[i][j];
 	}
 
 }
