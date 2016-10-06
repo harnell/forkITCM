@@ -3,7 +3,7 @@ package ClueGame;
 public class BoardCell {
 	private int row;
 	private int col;
-	private char initial;
+	private String initial;
 	
 	public BoardCell(int row, int col){
 		this.row = row;
@@ -31,7 +31,11 @@ public class BoardCell {
 		return null;
 	}
 
-	public Object getInitial() {
+	public void setInitial(String i) {
+		initial = i;
+	}
+	
+	public String getInitial() {
 		// TODO Auto-generated method stub
 		return null;
 	}

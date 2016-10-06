@@ -1,7 +1,11 @@
 package ClueGame;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Board {
@@ -30,15 +34,49 @@ public class Board {
 	}
 
 	public void initialize() {
+		try{
+			loadRoomConfig();
+			loadBoardConfig();
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+			
+	}
+	public void loadRoomConfig() throws FileNotFoundException{
+		roomConfigFile = "Legend.txt";	
+		FileReader reader = new FileReader(roomConfigFile);
+		
+		rooms = new HashMap<Character, String>();
+		
+		Scanner in = new Scanner(reader);
+		while(in.hasNextLine()){
+			String line = in.nextLine();
+			String info[] = line.split(",");
+			rooms.put(info[0].charAt(0), info[1]);
+		}
+		in.close();
+	}
+	public void loadBoardConfig() throws FileNotFoundException {
 		boardConfigFile = "BoardLayout.csv";
-		roomConfigFile = "Legend.txt";		
+		FileReader reader = new FileReader(boardConfigFile);
+		
+		board = new BoardCell[NUM_ROWS][NUM_COLS];
+		
+		Scanner in = new Scanner(reader);
+		int lineNumber = 0;
+		while(in.hasNextLine()){
+			String line = in.nextLine();
+			String info[] = line.split(",");
+			for (int i = 0; i < info.length; i++) {
+				board[lineNumber][i] = new BoardCell(lineNumber, i);
+				board[lineNumber][i].setInitial(info[i]);
+			}
+			lineNumber++;
+		}
+		
+		in.close();
 	}
-	public void loadRoomConfig() {
-
-	}
-	public void loadBoardConfig() {
-
-	}
+	
 	public void calcAdjacencies(BoardCell cell) {
 		int cellRow = cell.getRow();
 		int cellCol = cell.getCol();
