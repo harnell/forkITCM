@@ -72,6 +72,14 @@ public class Board {
 			}
 		}
 	}
+	
+	public Set<BoardCell> getAdjList(BoardCell cell) {
+		if(!adjMatrix.containsKey(cell)){
+			calcAdjacencies(cell);
+		}
+		return adjMatrix.get(cell);
+	}
+	
 	public void setConfigFiles(String string, String string2) {
 		// TODO Auto-generated method stub
 		
