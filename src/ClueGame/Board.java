@@ -1,10 +1,15 @@
 package ClueGame;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import experiment.BoardCell;
+
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
+	private static final int NUM_ROWS = 22;
+	private static final int NUM_COLS = 21;
 	private int numRows;
 	private int numColumns;
 	private BoardCell[][] board;
@@ -34,8 +39,23 @@ public class Board {
 	public void loadBoardConfig() {
 
 	}
-	public void calcAdjacencies() {
-
+	public void calcAdjacencies(BoardCell cell) {
+		int cellRow = cell.getRow();
+		int cellCol = cell.getCol();
+		Set<BoardCell> tempCells = new HashSet<BoardCell>();
+		if(cellRow - 1 >= 0) {
+			tempCells.add(board[cellRow - 1][cellCol]);
+		}
+		if(cellCol - 1 >= 0) {
+			tempCells.add(board[cellRow][cellCol - 1]);
+		}
+		if(cellRow + 1 < NUM_ROWS) {
+			tempCells.add(board[cellRow + 1][cellCol]);
+		}
+		if(cellCol + 1 < NUM_COLS) {
+			tempCells.add(board[cellRow][cellCol + 1]);
+		}
+		adjMatrix.put(cell, tempCells);
 	}
 	public void calcTargets(BoardCell cell, int pathLength) {
 
