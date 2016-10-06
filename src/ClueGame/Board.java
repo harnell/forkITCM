@@ -30,7 +30,8 @@ public class Board {
 	}
 
 	public void initialize() {
-
+		boardConfigFile = "BoardLayout.csv";
+		roomConfigFile = "Legend.txt";		
 	}
 	public void loadRoomConfig() {
 
