@@ -1,0 +1,18 @@
+Clue Game Tests
+-Testing the rooms
+	-Tests to make sure 3 diffrent rooms are read in properly. The first room in the file, a room in the middle of the file, and the last room in the file.
+	-Tests to make sure 11 rooms are read in.
+
+-Testing board dimensions
+	-Makes sure number of columns equals 21 and rows equals 22
+
+-Testing Doors
+	-Tests space (3,13) to see if it read in a Downward facing door, like in the layout.
+	-Tests space (6,18) to see if it read in a Leftward facing door, like in the layout.
+	-Tests space (8,2) to see if it read in a Rightward facing door, like in the layout.
+	-Tests space (17,13) to see if it read in a Upward facing door, like in the layout.
+	-Tests two spaces that are not doors in the layout, to make sure they aren't doors when read in.
+-Number of Doors
+	-Tests to see if the number of doors equals 11, like in the layout
+-Room tests
+	-Tests 5 diffrent spaces to see if the room intial is the same as it is in the layout. For example, space (0,0) is tested to see if it holds the char 'B' since it is the Bean Bag Room.
