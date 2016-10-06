@@ -1,4 +1,4 @@
-﻿B, Bean Bag Room, Card
+B, Bean Bag Room, Card
 R, Rumpus Room, Card
 G, Furnished Gazebo, Card
 C, Grotto, Card
@@ -8,4 +8,4 @@ W, Wine Celler, Card
 E, Easter Isle, Card
 L, Locker Room, Card
 X, Engine Room, Other
-A, Feet Area, Other
+A, Feet Area, Walkway

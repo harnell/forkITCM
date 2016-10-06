@@ -51,8 +51,9 @@ public class Board {
 		Scanner in = new Scanner(reader);
 		while(in.hasNextLine()){
 			String line = in.nextLine();
-			String info[] = line.split(",");
+			String info[] = line.split(", ");
 			rooms.put(info[0].charAt(0), info[1]);
+			System.out.println(info[0].charAt(0));
 		}
 		in.close();
 	}
@@ -136,5 +137,6 @@ public class Board {
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
-
+	
+	
 }

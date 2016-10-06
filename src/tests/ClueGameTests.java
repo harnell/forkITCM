@@ -25,7 +25,7 @@ public class ClueGameTests {
 	@BeforeClass
 	public static void setUp() {
 		board = Board.getInstance();
-		board.setConfigFiles("CR_ClueLayout.csv", "CR_ClueLegend.txt");		
+		board.setConfigFiles("BoardLayout.csv", "Legend.txt");		
 		board.initialize();
 	}
 	@Test
