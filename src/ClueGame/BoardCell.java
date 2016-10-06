@@ -3,11 +3,39 @@ package ClueGame;
 public class BoardCell {
 	private int row;
 	private int col;
-	private String initial;
-
+	private char initial;
+	private Boolean isDoor = false;
+	private DoorDirection direction;
+	
 	public BoardCell(int row, int col){
 		this.row = row;
 		this.col = col;
+	}
+	
+	public BoardCell(int row, int col, String initial){
+		this.row = row;
+		this.col = col;
+		this.initial = initial.charAt(0);
+		if(initial.length() == 2){
+			switch(initial.charAt(1)){
+			case 'U':
+				direction = DoorDirection.UP;
+				isDoor = true;
+				break;
+			case 'R':
+				direction = DoorDirection.RIGHT;
+				isDoor = true;
+				break;
+			case 'D':
+				direction = DoorDirection.DOWN;
+				isDoor = true;
+				break;
+			case 'L':
+				direction = DoorDirection.LEFT;
+				isDoor = true;
+				break;
+			}
+		}
 	}
 
 	public int getRow() {
@@ -17,36 +45,20 @@ public class BoardCell {
 		return col;
 	}
 	public boolean isWalkway() {
-		return initial.equals("A");
+		return initial == 'A';
 	}
 	public boolean isRoom() {
-		return (!initial.equals("A"));
+		return !(initial == 'A');
 	}
 	public boolean isDoorway() {
-		return (initial.length() != 1);
+		return isDoor;
 	}
 
-	public Object getDoorDirection() {
-		if(initial.length() == 2){
-			switch(initial.charAt(1)){
-			case 'U':
-				return DoorDirection.UP;
-			case 'R':
-				return DoorDirection.RIGHT;
-			case 'D':
-				return DoorDirection.DOWN;
-			case 'L':
-				return DoorDirection.RIGHT;
-			}
-		}
-		return DoorDirection.NONE;
+	public DoorDirection getDoorDirection(){
+		return direction;
 	}
 
-	public void setInitial(String i) {
-		initial = i;
-	}
-
-	public String getInitial() {
+	public char getInitial() {
 		return initial;
 	}
 

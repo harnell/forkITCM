@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
-	private static final int NUM_ROWS = 22;
-	private static final int NUM_COLS = 21;
+//	private static final int NUM_ROWS = 22;
+//	private static final int NUM_COLS = 21;
 	private int numRows = 0;
 	private int numColumns = 0;
 	private BoardCell[][] board;
@@ -61,7 +61,7 @@ public class Board {
 	
 		FileReader reader = new FileReader(boardConfigFile);
 		
-		board = new BoardCell[NUM_ROWS][NUM_COLS];
+		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		
 		Scanner in = new Scanner(reader);
 		int lineNumber = 0;
@@ -70,8 +70,7 @@ public class Board {
 			String info[] = line.split(",");
 			numColumns = info.length;
 			for (int i = 0; i < info.length; i++) {
-				board[lineNumber][i] = new BoardCell(lineNumber, i);
-				board[lineNumber][i].setInitial(info[i]);
+				board[lineNumber][i] = new BoardCell(lineNumber, i, info[i]);
 			}
 			lineNumber++;
 		}
@@ -89,10 +88,10 @@ public class Board {
 		if(cellCol - 1 >= 0) {
 			tempCells.add(board[cellRow][cellCol - 1]);
 		}
-		if(cellRow + 1 < NUM_ROWS) {
+		if(cellRow + 1 < numRows) {
 			tempCells.add(board[cellRow + 1][cellCol]);
 		}
-		if(cellCol + 1 < NUM_COLS) {
+		if(cellCol + 1 < numColumns) {
 			tempCells.add(board[cellRow][cellCol + 1]);
 		}
 		adjMatrix.put(cell, tempCells);

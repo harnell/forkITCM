@@ -49,10 +49,10 @@ public class ClueGameTests {
 		room = board.getCellAt(6, 18);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.LEFT, room.getDoorDirection());
-		room = board.getCellAt(8, 2);
+		room = board.getCellAt(7, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
-		room = board.getCellAt(17, 13);
+		room = board.getCellAt(16, 13);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.UP, room.getDoorDirection());
 		room = board.getCellAt(10, 10);
