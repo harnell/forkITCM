@@ -31,10 +31,10 @@ public class ClueGameTests {
 		@Test
 		public void testRooms() {
 			Map<Character, String> legend = board.getLegend();
-			assertEquals(LEGEND_SIZE, legend.size());
 			assertEquals("Bean Bag Room", legend.get('B'));
 			assertEquals("Rumpus Room", legend.get('R'));
 			assertEquals("Feet Area", legend.get('A'));
+			assertEquals(LEGEND_SIZE, legend.size());
 		}
 		@Test
 		public void testBoardDimensions() {
@@ -62,8 +62,7 @@ public class ClueGameTests {
 
 		}
 		@Test
-		public void testNumberOfDoorways() 
-		{
+		public void testNumberOfDoorways() {
 			int numDoors = 0;
 			for (int row=0; row < board.getNumRows(); row++)
 				for (int col=0; col < board.getNumColumns(); col++) {
