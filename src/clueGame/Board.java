@@ -11,8 +11,6 @@ import java.util.zip.InflaterOutputStream;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
-//	private static final int NUM_ROWS = 22;
-//	private static final int NUM_COLS = 21;
 	private int numRows = 0;
 	private int numColumns = 0;
 	private BoardCell[][] board;
@@ -54,8 +52,7 @@ public class Board {
 			String line = in.nextLine();
 			String info[] = line.split(", ");
 			rooms.put(info[0].charAt(0), info[1]);
-			System.out.println(info[0].charAt(0));
-			if(!(info[2].equals("Card")) || !(info[2].equals("Other"))) { //Check if config file has proper formatting
+			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { //Check if config file has proper formatting
 				throw new BadConfigFormatException("Config file not in proper format");
 			}
 		}
@@ -77,7 +74,7 @@ public class Board {
 				board[lineNumber][i] = new BoardCell(lineNumber, i, info[i]);
 				//Throw exception if room is not contained in legend
 				if(!rooms.containsKey(info[i].charAt(0))){ 
-					throw new BadConfigFormatException("Room is not defined in the legend.");
+					throw new BadConfigFormatException("Room is not in legend");
 				}
 			}
 			lineNumber++;

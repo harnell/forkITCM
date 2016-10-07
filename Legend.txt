@@ -8,4 +8,4 @@ W, Wine Celler, Card
 E, Easter Isle, Card
 L, Locker Room, Card
 X, Engine Room, Other
-A, Feet Area, Other
+F, Feet Area, Other
