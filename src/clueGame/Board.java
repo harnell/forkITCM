@@ -128,12 +128,40 @@ public class Board {
 		}
 	}
 	
+	public void calcTargets(int row, int col, int pathLength) {
+		BoardCell cell = board[row][col];
+		visited.add(cell);
+		Set<BoardCell> adjacents = getAdjList(cell);
+		for (BoardCell adjCell : adjacents) {
+			if(!visited.contains(adjCell)){
+				visited.add(adjCell);
+				if(pathLength == 1){
+					targets.add(adjCell);
+				} 
+				else {
+					calcTargets(adjCell, pathLength - 1);
+				}
+				visited.remove(adjCell);
+			}
+		}
+	}
+	
+	
 	public Set<BoardCell> getAdjList(BoardCell cell) {
 		if(!adjMatrix.containsKey(cell)){
 			calcAdjacencies(cell);
 		}
 		return adjMatrix.get(cell);
 	}
+	
+	public Set<BoardCell> getAdjList(int row, int col) {
+		BoardCell cell = board[row][col];
+		if(!adjMatrix.containsKey(cell)){
+			calcAdjacencies(cell);
+		}
+		return adjMatrix.get(cell);
+	}
+	
 	
 	public void setConfigFiles(String string, String string2) {
 		roomConfigFile = string2;
@@ -150,6 +178,9 @@ public class Board {
 	}
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
+	}
+	public Set<BoardCell> getTargets() {
+		return targets;
 	}
 	
 	
