@@ -70,7 +70,7 @@ public class ClueGameTests {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(11, numDoors);
+		Assert.assertEquals(12, numDoors);
 	}
 	@Test
 	public void testRoomInitials() {

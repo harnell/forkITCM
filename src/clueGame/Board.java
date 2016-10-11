@@ -31,7 +31,6 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
-
 	public void initialize() {
 		try{
 			loadRoomConfig();
@@ -52,7 +51,8 @@ public class Board {
 			String line = in.nextLine();
 			String info[] = line.split(", ");
 			rooms.put(info[0].charAt(0), info[1]);
-			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { //Check if config file has proper formatting
+			//Check if config file has proper formatting
+			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { 
 				throw new BadConfigFormatException("Config file not in proper format");
 			}
 		}
@@ -63,6 +63,10 @@ public class Board {
 		FileReader reader = new FileReader(boardConfigFile);
 		
 		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		targets = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>();
 		
 		Scanner in = new Scanner(reader);
 		int lineNumber = 0;
