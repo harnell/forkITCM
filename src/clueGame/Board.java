@@ -105,6 +105,10 @@ public class Board {
 		int cellRow = cell.getRow();
 		int cellCol = cell.getCol();
 		Set<BoardCell> cellsToAdd = new HashSet<BoardCell>();
+		if(cell.isRoom() && !cell.isDoorway()) {
+			adjMatrix.put(cell, cellsToAdd);
+			return;
+		}
 		if(cell.isDoorway()) {
 			switch (cell.getDoorDirection()) {
 			case UP:
