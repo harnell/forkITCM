@@ -168,7 +168,7 @@ public class Board {
 		for (BoardCell adjCell : adjacents) {
 			if(!visited.contains(adjCell)){
 				visited.add(adjCell);
-				if(pathLength == 1){
+				if(pathLength == 1 || adjCell.isDoorway()){
 					targets.add(adjCell);
 				} 
 				else {
@@ -219,13 +219,6 @@ public class Board {
 		return board[i][j];
 	}
 	public Set<BoardCell> getTargets() {
-		Set<BoardCell> cellsToDelete = new HashSet<BoardCell>();
-		for(BoardCell o: targets) {
-			if(!o.isDoorway() && !o.isWalkway()) {
-				cellsToDelete.add(o);
-			}
-		}
-		targets.removeAll(cellsToDelete);
 		return targets;
 	}
 	private static boolean isDoorRightWay(BoardCell[][] board, int cellRow, int cellCol, DoorDirection whichWay) {

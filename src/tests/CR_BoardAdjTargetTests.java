@@ -232,7 +232,10 @@ public class CR_BoardAdjTargetTests {
 	public void testTargetsSixSteps() {
 		board.calcTargets(14, 0, 6);
 		Set<BoardCell> targets= board.getTargets();
-		//assertEquals(7, targets.size());
+		for(BoardCell o: board.getAdjList(14, 4) ) {
+			System.out.println(o.getRow() + " " + o.getCol());
+		}
+		assertEquals(7, targets.size());
 		assertTrue(targets.contains(board.getCellAt(14, 6)));
 		assertTrue(targets.contains(board.getCellAt(15, 5)));	
 		assertTrue(targets.contains(board.getCellAt(15, 3)));	
