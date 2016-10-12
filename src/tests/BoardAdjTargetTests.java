@@ -155,9 +155,6 @@ public class BoardAdjTargetTests {
 		
 		board.calcTargets(10, 17, 2);
 		testList = board.getTargets();
-		for(BoardCell o: testList) {
-			System.out.println(o.getRow() + " " + o.getCol());
-		}
 		assertEquals(3, testList.size());
 		assertTrue(testList.contains(board.getCellAt(9, 18)));
 		assertTrue(testList.contains(board.getCellAt(9, 16)));
