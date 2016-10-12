@@ -6,6 +6,7 @@ public class BoardCell {
 	private char initial;
 	private Boolean isDoor = false;
 	private DoorDirection direction;
+	public static char WalkwayChar;
 	
 	public BoardCell(int row, int col){
 		this.row = row;
@@ -45,10 +46,10 @@ public class BoardCell {
 		return col;
 	}
 	public boolean isWalkway() {
-		return initial == 'A';
+		return initial == WalkwayChar;
 	}
 	public boolean isRoom() {
-		return !(initial == 'A');
+		return !(initial == WalkwayChar);
 	}
 	public boolean isDoorway() {
 		return isDoor;
