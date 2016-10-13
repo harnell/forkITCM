@@ -41,6 +41,9 @@ public class Board {
 		}
 
 	}
+	/*
+	 * Reads in data from roomconfig file
+	 */
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException{	
 
 		FileReader reader = new FileReader(roomConfigFile);
@@ -48,6 +51,7 @@ public class Board {
 		rooms = new HashMap<Character, String>();
 
 		Scanner in = new Scanner(reader);
+		//Breaks up each line by commas
 		while(in.hasNextLine()){
 			String line = in.nextLine();
 			String info[] = line.split(", ");
@@ -62,6 +66,10 @@ public class Board {
 		}
 		in.close();
 	}
+	
+	/*
+	 * Initializes class level variables and reads in data from board config file
+	 */
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 
 		FileReader reader = new FileReader(boardConfigFile);
@@ -72,9 +80,11 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();
 
+		//Makes scanner to read text from file
 		Scanner in = new Scanner(reader);
 		int lineNumber = 0;
 		while(in.hasNextLine()){
+			//Takes every line and breaks them up based on commas
 			String line = in.nextLine();
 			String info[] = line.split(",");
 			numColumns = info.length;
@@ -88,6 +98,7 @@ public class Board {
 			lineNumber++;
 		}
 		numRows = lineNumber;
+		//Makes sure that that the columns are all the same length
 		for (int i = 0; i < numRows; i++) {
 			int j = 0;
 			while(board[i][j] != null){
@@ -100,7 +111,10 @@ public class Board {
 		}
 		in.close();
 	}
-
+	
+	/*
+	 * Calulates the adjacencies for a cell that is passed in
+	 */
 	public void calcAdjacencies(BoardCell cell) {
 		int cellRow = cell.getRow();
 		int cellCol = cell.getCol();
@@ -109,6 +123,7 @@ public class Board {
 			adjMatrix.put(cell, cellsToAdd);
 			return;
 		}
+		//Checks if player starts in doorway and adds exit as only adjacency.
 		if(cell.isDoorway()) {
 			switch (cell.getDoorDirection()) {
 			case UP:
@@ -129,7 +144,9 @@ public class Board {
 			adjMatrix.put(cell, cellsToAdd);
 			return;
 		}
+		//Makes set of cells that are invalid as move spaces to later be removed
 		Set<BoardCell> cellsToDelete = new HashSet<BoardCell>();
+		//Following if statments check door direction and only adds them when in correct cell to enter
 		if(cellRow - 1 >= 0) {
 			cellsToAdd.add(board[cellRow - 1][cellCol]);
 			if(!isDoorRightWay(board, cellRow - 1, cellCol, DoorDirection.DOWN)) {
@@ -162,16 +179,22 @@ public class Board {
 		cellsToAdd.removeAll(cellsToDelete);
 		adjMatrix.put(cell, cellsToAdd);
 	}
+	
+	/*
+	 * Calculates the targets that the player can move to 
+	 */
 	public void calcTargetsRecursive(BoardCell cell, int pathLength) {
 		visited.add(cell);
 		Set<BoardCell> adjacents = getAdjList(cell);
 		for (BoardCell adjCell : adjacents) {
 			if(!visited.contains(adjCell)){
 				visited.add(adjCell);
+				//Adds adjacent cell is no more moves or there is a doorway
 				if(pathLength == 1 || adjCell.isDoorway()){
 					targets.add(adjCell);
 				} 
 				else {
+					//Calls the function again if the path length is not yet 1
 					calcTargetsRecursive(adjCell, pathLength - 1);
 				}
 				visited.remove(adjCell);
@@ -179,48 +202,85 @@ public class Board {
 		}
 	}
 
+	/*
+	 * Sets up for recursive method to be called to calculate the targets
+	 */
 	public void calcTargets(int row, int col, int pathLength) {
 		BoardCell cell = board[row][col];
+		//clears out targets list for new calculation
 		targets.clear();
 		calcTargetsRecursive(cell, pathLength);
 	}
 
-
+	/*
+	 * Returns adjacencey list
+	 */
 	public Set<BoardCell> getAdjList(BoardCell cell) {
+		//calculate adjacencies if not yet calculated
 		if(!adjMatrix.containsKey(cell)){
 			calcAdjacencies(cell);
 		}
 		return adjMatrix.get(cell);
 	}
 
+	/*
+	 * Returns adjacencey list
+	 */
 	public Set<BoardCell> getAdjList(int row, int col) {
 		BoardCell cell = board[row][col];
+		//calculate adjacencies if not yet calculated
 		if(!adjMatrix.containsKey(cell)){
 			calcAdjacencies(cell);
 		}
 		return adjMatrix.get(cell);
 	}
 
-
+	/*
+	 * Sets file names for for the configuration files
+	 */
 	public void setConfigFiles(String string, String string2) {
 		roomConfigFile = string2;
 		boardConfigFile = string;		
 	}
+	
+	/*
+	 * Returns the legend read in from config file
+	 */
 	public Map<Character, String> getLegend() {
 		return rooms;
 	}
+	
+	/*
+	 * Returns the number of rows on the board
+	 */
 	public int getNumRows() {
 		return numRows;
 	}
+	/*
+	 * returns the number of columns on the board
+	 */
 	public int getNumColumns() {
 		return numColumns;
 	}
+	
+	/*
+	 * Returns the cell at row, column location
+	 */
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
+	
+	/*
+	 * Returns the targets the the player can move to
+	 */
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
+	
+	/*
+	 * Checks if the doorway is in the correct direction for the player to enter it based on the cell location
+	 * 
+	 */
 	private static boolean isDoorRightWay(BoardCell[][] board, int cellRow, int cellCol, DoorDirection whichWay) {
 		if(board[cellRow][cellCol].isDoorway()) {
 			if(board[cellRow][cellCol].getDoorDirection() != whichWay) {
