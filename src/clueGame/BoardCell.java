@@ -17,6 +17,7 @@ public class BoardCell {
 		this.row = row;
 		this.col = col;
 		this.initial = initial.charAt(0);
+		//Checks cell to see if it is a door and uses a switch statement to figure out the direction of the door
 		if(initial.length() == 2){
 			switch(initial.charAt(1)){
 			case 'U':

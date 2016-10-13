@@ -33,7 +33,7 @@ public class ClueGameTests {
 		Map<Character, String> legend = board.getLegend();
 		assertEquals("Bean Bag Room", legend.get('B'));
 		assertEquals("Rumpus Room", legend.get('R'));
-		assertEquals("Feet Area", legend.get('F'));
+		assertEquals("Walkway", legend.get('F'));
 		assertEquals(LEGEND_SIZE, legend.size());
 	}
 	@Test
