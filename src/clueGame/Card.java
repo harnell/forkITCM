@@ -22,5 +22,17 @@ public class Card {
 		}
 		return false;
 	}
+
+
+
+	public String getCardName() {
+		return cardName;
+	}
+
+
+
+	public CardType getType() {
+		return type;
+	}
 	
 }

@@ -377,4 +377,19 @@ public class Board {
 	}
 
 
+	public ArrayList<Card> getPersonDeck() {
+		return personDeck;
+	}
+	public ArrayList<Card> getWeaponsDeck() {
+		return weaponsDeck;
+	}
+	public ArrayList<Card> getRoomDeck() {
+		return roomDeck;
+	}
+	public Set<Player> getPlayers() {
+		return players;
+	}
+	public Set<Card> getDeck() {
+		return deck;
+	}
 }
