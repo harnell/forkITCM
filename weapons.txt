@@ -1,0 +1,6 @@
+WEAPON, Needler
+WEAPON, Energy Sword
+WEAPON, Spartan Laser
+WEAPON, Gravity Hammer
+WEAPON, Brute Shot
+WEAPON, Plasma Grenade
