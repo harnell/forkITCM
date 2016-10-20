@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.zip.InflaterOutputStream;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
@@ -21,6 +20,11 @@ public class Board {
 	private Set<BoardCell> visited;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String personConfigFile = "person.txt";
+	private String weaponsConfigFile = "weapons.txt";
+	private Solution theAnswer;
+	private Set<Card> deck = new HashSet<Card>(21);
+	
 
 
 
@@ -36,6 +40,8 @@ public class Board {
 		try{
 			loadRoomConfig();
 			loadBoardConfig();
+			loadWeaponsConfig();
+			loadPersonConfig();
 		}catch(FileNotFoundException | BadConfigFormatException e){
 			e.printStackTrace();
 		}
@@ -110,6 +116,34 @@ public class Board {
 			}
 		}
 		in.close();
+	}
+	
+	/*
+	 * Loads in and creates the weapon, player, and room cards
+	 */
+	public void loadPersonConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader personReader = new FileReader(personConfigFile);
+
+		Scanner personIn = new Scanner(personReader);
+		
+		//This will import all of the person cards
+		for (int i = 0; i < 6; i++){
+			
+		}
+	}
+	
+	/*
+	 * Loads in and creates the weapon, player, and room cards
+	 */
+	public void loadWeaponsConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader weaponsReader = new FileReader(weaponsConfigFile);
+
+		Scanner weaponsIn = new Scanner(weaponsReader);
+		
+		//This will import all of the weapons cards
+		for (int i = 0; i < 6; i++){
+			
+		}
 	}
 	
 	/*
