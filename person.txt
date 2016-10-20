@@ -1,6 +1,6 @@
 PLAYER, Master Cheif, 0, 4, green
-PLAYER, Arbiter, 21, 5, gold
+PLAYER, Arbiter, 21, 5, gray
 PLAYER, Cortana, 21, 15, blue
 PLAYER, Oracle, 20, 8, white
 PLAYER, Sargent Johnson, 0, 16, black
-PLAYER, Gravemind, 10, 0, brown
+PLAYER, Gravemind, 10, 0, darkGray

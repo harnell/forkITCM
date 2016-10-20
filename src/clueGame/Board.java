@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,6 +27,10 @@ public class Board {
 	private String weaponsConfigFile = "weapons.txt";
 	private Solution theAnswer;
 	private Set<Card> deck = new HashSet<Card>(21);
+	private ArrayList<Card> personDeck = new ArrayList<Card>();
+	private ArrayList<Card> weaponsDeck = new ArrayList<Card>();
+	private ArrayList<Card> roomDeck = new ArrayList<Card>();
+	private Set<Player> players;
 	
 
 
@@ -65,6 +72,8 @@ public class Board {
 				BoardCell.WalkwayChar = info[0].charAt(0);
 			}
 			rooms.put(info[0].charAt(0), info[1]);
+			roomDeck.add(new Card(info[1], CardType.ROOM));
+			deck.add(new Card(info[1], CardType.ROOM));
 			//Check if config file has proper formatting
 			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { 
 				throw new BadConfigFormatException("Config file not in proper format");
@@ -126,14 +135,31 @@ public class Board {
 
 		Scanner personIn = new Scanner(personReader);
 		
+		players = new HashSet<Player>(6);
+		
 		//This will import all of the person cards
 		for (int i = 0; i < 6; i++){
-			
+			String line = personIn.nextLine();
+			String info[] = line.split(", ");
+			personDeck.add(new Card(info[1], CardType.PERSON));
+			deck.add(new Card(info[1], CardType.PERSON));
+			int playerRow = Integer.parseInt(info[2]);
+			int playerColumn = Integer.parseInt(info[3]);
+			Color playerColor = convertColor(info[4]);
+			if (info[1].equals("Master Chief")){
+				Player temp = new HumanPlayer(info[1], playerRow, playerColumn, playerColor);
+				players.add(temp);
+			}
+			else {
+				Player temp = new ComputerPlayer(info[1], playerRow, playerColumn, playerColor);
+				players.add(temp);
+			}
 		}
+		personIn.close();
 	}
 	
 	/*
-	 * Loads in and creates the weapon, player, and room cards
+	 * Loads in and creates the weapon cards
 	 */
 	public void loadWeaponsConfig() throws FileNotFoundException, BadConfigFormatException {
 		FileReader weaponsReader = new FileReader(weaponsConfigFile);
@@ -142,8 +168,17 @@ public class Board {
 		
 		//This will import all of the weapons cards
 		for (int i = 0; i < 6; i++){
-			
+			String line = weaponsIn.nextLine();
+			String info[] = line.split(", ");
+			if (!(info[0].equals("WEAPON"))){
+				throw new BadConfigFormatException();
+			}
+			else{
+				weaponsDeck.add(new Card(info[1], CardType.WEAPON));
+				deck.add(new Card(info[1], CardType.WEAPON));
+			}
 		}
+		weaponsIn.close();
 	}
 	
 	/*
@@ -328,5 +363,18 @@ public class Board {
 			return true;
 		}
 	}
+	
+	public Color convertColor(String strColor) {
+	    Color color; 
+	    try {     
+	        // We can use reflection to convert the string to a color
+	        Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+	        color = (Color)field.get(null); 
+	    } catch (Exception e) {  
+	        color = null; // Not defined  
+	    }
+	    return color;
+	}
+
 
 }
