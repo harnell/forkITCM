@@ -26,7 +26,7 @@ public class Board {
 	private String personConfigFile = "person.txt";
 	private String weaponsConfigFile = "weapons.txt";
 	private Solution theAnswer;
-	private Set<Card> deck = new HashSet<Card>(21);
+	private ArrayList<Card> deck = new ArrayList<Card>(21);
 	private ArrayList<Card> personDeck = new ArrayList<Card>();
 	private ArrayList<Card> weaponsDeck = new ArrayList<Card>();
 	private ArrayList<Card> roomDeck = new ArrayList<Card>();
@@ -72,8 +72,10 @@ public class Board {
 				BoardCell.WalkwayChar = info[0].charAt(0);
 			}
 			rooms.put(info[0].charAt(0), info[1]);
-			roomDeck.add(new Card(info[1], CardType.ROOM));
-			deck.add(new Card(info[1], CardType.ROOM));
+			if (info[2].equals("Card")){
+				roomDeck.add(new Card(info[1], CardType.ROOM));
+				deck.add(new Card(info[1], CardType.ROOM));
+			}
 			//Check if config file has proper formatting
 			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { 
 				throw new BadConfigFormatException("Config file not in proper format");
@@ -389,7 +391,7 @@ public class Board {
 	public Set<Player> getPlayers() {
 		return players;
 	}
-	public Set<Card> getDeck() {
+	public ArrayList<Card> getDeck() {
 		return deck;
 	}
 }

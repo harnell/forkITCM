@@ -1,4 +1,4 @@
-PLAYER, Master Cheif, 0, 4, green
+PLAYER, Master Chief, 0, 4, green
 PLAYER, Arbiter, 21, 5, gray
 PLAYER, Cortana, 21, 15, blue
 PLAYER, Oracle, 20, 8, white

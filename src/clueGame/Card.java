@@ -15,7 +15,7 @@ public class Card {
 
 
 	public boolean equals(Card card){
-		if (this.cardName == card.cardName){
+		if (this.cardName.equals(card.cardName) ){
 			if (this.type == card.type){
 				return true;
 			}
@@ -33,6 +33,13 @@ public class Card {
 
 	public CardType getType() {
 		return type;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Card [cardName=" + cardName + ", type=" + type + "]";
 	}
 	
 }
