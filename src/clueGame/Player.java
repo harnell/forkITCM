@@ -22,7 +22,23 @@ public class Player {
 		this.color = color;
 	}
 
+	 
 
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public Color getColor() {
+		return color;
+	}
 
 	public Card disproveSuggestion(Solution suggestion) {
 		 return null;

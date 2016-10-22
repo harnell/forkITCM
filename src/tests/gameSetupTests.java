@@ -1,5 +1,6 @@
 package tests;
 
+import java.awt.Color;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -10,6 +11,9 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
+import clueGame.Player;
 
 public class gameSetupTests {
 	
@@ -68,10 +72,19 @@ public class gameSetupTests {
 			assertEquals(CardType.PERSON, board.getDeck().get(i).getType());
 		}
 	}
-//	@Test
-//	public void TestPersonCards(){
-//		
-//	}
+	@Test
+	public void TestPersonCards(){
+		Object[] players = board.getPlayers().toArray();
+		for (Object x : players){
+			System.out.println(((Player) x).getPlayerName());
+		}
+		assertEquals(((Player)players[5]).getPlayerName(), "Oracle");
+		assertEquals(((Player)players[4]).getColor(), Color.green);
+		assertEquals(((Player)players[2]).getColumn(), 16);
+		assertEquals(((Player)players[0]).getRow(), 21);
+		//assertTrue(board.getPlayers().contains(new ComputerPlayer("Arbiter", 21, 5, Color.gray)));
+		assertTrue(board.getPlayers().size() == 6);
+	}
 //	@Test
 //	public void TesWeaponsCards(){
 //		

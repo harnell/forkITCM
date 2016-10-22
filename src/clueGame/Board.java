@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
@@ -137,7 +138,7 @@ public class Board {
 
 		Scanner personIn = new Scanner(personReader);
 		
-		players = new HashSet<Player>(6);
+		players = new HashSet<Player>();
 		
 		//This will import all of the person cards
 		for (int i = 0; i < 6; i++){
