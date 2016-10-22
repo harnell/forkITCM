@@ -72,9 +72,11 @@ public class gameSetupTests {
 			assertEquals(CardType.PERSON, board.getDeck().get(i).getType());
 		}
 	}
+	
+	//Testing that the players were loaded correctly in the players Set in Board
 	@Test
 	public void TestPersonCards(){
-		Object[] players = board.getPlayers().toArray();
+		Object[] players = board.getPlayers().toArray();			//Yes it's ugly, but it works. Also can't use .contains, so this was the best method we could think of
 		for (Object x : players){
 			System.out.println(((Player) x).getPlayerName());
 		}
@@ -82,7 +84,6 @@ public class gameSetupTests {
 		assertEquals(((Player)players[4]).getColor(), Color.green);
 		assertEquals(((Player)players[2]).getColumn(), 16);
 		assertEquals(((Player)players[0]).getRow(), 21);
-		//assertTrue(board.getPlayers().contains(new ComputerPlayer("Arbiter", 21, 5, Color.gray)));
 		assertTrue(board.getPlayers().size() == 6);
 	}
 //	@Test
@@ -98,6 +99,6 @@ public class gameSetupTests {
 //	public void TestPlayersInitialized(){
 //		
 //	}
-	
+// hello
 	
 }
