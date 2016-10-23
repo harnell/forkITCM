@@ -378,6 +378,30 @@ public class Board {
 	    }
 	    return color;
 	}
+	public void makeSolution(){
+		int randroom = (int) (Math.random()*9);
+		int randweapon = (int) (Math.random()*6 + 8);
+		int randperson = (int) (Math.random()*6 + 13);
+		String room = deck.remove(randroom).getCardName();
+		String weapon = deck.remove(randweapon).getCardName();
+		String person = deck.remove(randperson).getCardName();
+		theAnswer = new Solution(person, room, weapon);
+		
+	}
+	public void dealCards(){
+		ArrayList<Card> tempDeck = new ArrayList<Card>(18);
+		for (Card c: deck){
+			tempDeck.add(c);
+		}
+		for (Player p: players){
+			Set<Card> cards = new HashSet<Card>();
+			for (int i = 0; i < 3; i++){
+				int rand = (int) (Math.random()*tempDeck.size());
+				cards.add(tempDeck.remove(rand));
+			}
+			p.setMyCards(cards);
+		}
+	}
 
 
 	public ArrayList<Card> getPersonDeck() {

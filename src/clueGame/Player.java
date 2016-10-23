@@ -3,7 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.util.Set;
 
-public class Player {
+public class Player implements Comparable<Object>{
 	
 	 private String playerName;
 	 private int row;
@@ -12,9 +12,19 @@ public class Player {
 	 private Set<Card> myCards;
 	 private Set<Card> seenCards;
 	 
-	 
-	 
-	 public Player(String playerName, int row, int column, Color color) {
+	 public Set<Card> getMyCards() {
+		return myCards;
+	}
+
+
+
+	public void setMyCards(Set<Card> myCards) {
+		this.myCards = myCards;
+	}
+
+
+
+	public Player(String playerName, int row, int column, Color color) {
 		super();
 		this.playerName = playerName;
 		this.row = row;
@@ -43,4 +53,10 @@ public class Player {
 	public Card disproveSuggestion(Solution suggestion) {
 		 return null;
 	 }
+
+
+	public int compareTo(Object p) {
+		Player p1 = (Player)p;
+		return this.playerName.compareTo(p1.getPlayerName());
+	}
 }

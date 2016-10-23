@@ -1,9 +1,15 @@
 package tests;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,7 +36,7 @@ public class gameSetupTests {
 	@Test
 	public void TestPersonDeck(){
 		//personsDeck
-		System.out.println(board.getPersonDeck().get(2).toString());
+		//System.out.println(board.getPersonDeck().get(2).toString());
 		assertTrue(board.getPersonDeck().get(2).equals(new Card("Cortana", CardType.PERSON)));			//Tests if certain car matches the item in that location in person.txt
 		assertTrue(board.getPersonDeck().size() == 6);													//Tests if size of array correct, should ensure along with above that entire array is correct
 		for (int i = 0; i < 6; i++){
@@ -76,29 +82,46 @@ public class gameSetupTests {
 	//Testing that the players were loaded correctly in the players Set in Board
 	@Test
 	public void TestPersonCards(){
-		Object[] players = board.getPlayers().toArray();			//Yes it's ugly, but it works. Also can't use .contains, so this was the best method we could think of
-		for (Object x : players){
-			System.out.println(((Player) x).getPlayerName());
+		Set<Player> players = new TreeSet<Player>();
+		for (Player x : board.getPlayers()){
+			players.add(x);
 		}
-		assertEquals(((Player)players[5]).getPlayerName(), "Oracle");
-		assertEquals(((Player)players[4]).getColor(), Color.green);
-		assertEquals(((Player)players[2]).getColumn(), 16);
-		assertEquals(((Player)players[0]).getRow(), 21);
+		ArrayList<Player> inOrder = new ArrayList<Player>(players);
+		Player[] Order = new Player[6];
+		int i = 0;
+		for (Player y: inOrder){
+			Order[i] = y;
+			i++;
+		}
+		assertEquals(Order[0].getPlayerName(), "Arbiter");
+		assertEquals(Order[3].getColor(), Color.green);
+		assertEquals(Order[5].getColumn(), 16);
+		assertEquals(Order[1].getRow(), 21);
 		assertTrue(board.getPlayers().size() == 6);
 	}
-//	@Test
-//	public void TesWeaponsCards(){
-//		
-//	}
-//
-//	@Test
-//	public void TestDeckSize(){
-//		
-//	}
-//	@Test
-//	public void TestPlayersInitialized(){
-//		
-//	}
-// hello
 	
+
+	
+	@Test
+	public void TestPlayersDealtHands(){
+		board.makeSolution();
+		board.dealCards();
+		ArrayList<Card> toBeDealt = board.getDeck();
+		ArrayList<Card> hasBeenDealt = new ArrayList<Card>();
+		Set<Player> tempPlayers = board.getPlayers();
+		for (Player p: tempPlayers){
+			Set<Card> tempCards = p.getMyCards();
+			for (Card c: tempCards){
+				//  No Duplicates
+				assertTrue(!hasBeenDealt.contains(c));
+				hasBeenDealt.add(c);
+			}
+			// Players should have roughly the same number of cards
+			assertTrue(tempCards.size() >= 3);	
+		}
+		// All cards dealt
+		for(Card c: hasBeenDealt){
+			assertTrue(board.getDeck().contains(c));
+		}
+	}
 }
