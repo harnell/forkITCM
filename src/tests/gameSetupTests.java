@@ -116,7 +116,7 @@ public class gameSetupTests {
 				assertTrue(!hasBeenDealt.contains(c));
 				hasBeenDealt.add(c);
 			}
-			// Players should have roughly the same number of cards
+			// Players should have roughly the same number of cards.
 			assertTrue(tempCards.size() >= 3);	
 		}
 		// All cards dealt
