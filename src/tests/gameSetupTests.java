@@ -30,7 +30,6 @@ public class gameSetupTests {
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "Legend.txt");		
 		board.initialize();
-		
 	}
 	
 	@Test
@@ -108,7 +107,7 @@ public class gameSetupTests {
 		board.dealCards();
 		ArrayList<Card> toBeDealt = board.getDeck();
 		ArrayList<Card> hasBeenDealt = new ArrayList<Card>();
-		Set<Player> tempPlayers = board.getPlayers();
+		ArrayList<Player> tempPlayers = board.getPlayers();
 		for (Player p: tempPlayers){
 			Set<Card> tempCards = p.getMyCards();
 			for (Card c: tempCards){

@@ -15,30 +15,43 @@ import java.util.TreeSet;
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
+	//Size of board
 	private int numRows = 0;
 	private int numColumns = 0;
+	
+	//Board
 	private BoardCell[][] board;
 	private Map<Character, String> rooms;
+	
+	//Creating adjacent matrix
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	
+	//Config file names
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String personConfigFile = "person.txt";
 	private String weaponsConfigFile = "weapons.txt";
+	
+	//Solution
 	private Solution theAnswer;
+	
+	//Decks of cards
 	private ArrayList<Card> deck = new ArrayList<Card>(21);
 	private ArrayList<Card> personDeck = new ArrayList<Card>();
 	private ArrayList<Card> weaponsDeck = new ArrayList<Card>();
 	private ArrayList<Card> roomDeck = new ArrayList<Card>();
-	private Set<Player> players;
+	
+	//Players
+	private ArrayList<Player> players;								
 	
 
 
 
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
-	// ctor is private to ensure only one can be created
+	// ctor is static to ensure only one can be created
 	private Board() {}
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -138,7 +151,7 @@ public class Board {
 
 		Scanner personIn = new Scanner(personReader);
 		
-		players = new HashSet<Player>();
+		players = new ArrayList<Player>();														//TODO: make this ArrayList<>
 		
 		//This will import all of the person cards
 		for (int i = 0; i < 6; i++){
@@ -386,7 +399,6 @@ public class Board {
 		String weapon = deck.remove(randweapon).getCardName();
 		String person = deck.remove(randperson).getCardName();
 		theAnswer = new Solution(person, room, weapon);
-		
 	}
 	public void dealCards(){
 		ArrayList<Card> tempDeck = new ArrayList<Card>(18);
@@ -413,7 +425,7 @@ public class Board {
 	public ArrayList<Card> getRoomDeck() {
 		return roomDeck;
 	}
-	public Set<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 	public ArrayList<Card> getDeck() {

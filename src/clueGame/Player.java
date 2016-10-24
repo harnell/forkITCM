@@ -3,11 +3,11 @@ package clueGame;
 import java.awt.Color;
 import java.util.Set;
 
-public class Player implements Comparable<Object>{
+public abstract class Player implements Comparable<Object>{
 	
 	 private String playerName;
-	 private int row;
-	 private int column;
+	 protected int row;
+	 protected int column;
 	 private Color color;
 	 private Set<Card> myCards;
 	 private Set<Card> seenCards;
@@ -59,4 +59,8 @@ public class Player implements Comparable<Object>{
 		Player p1 = (Player)p;
 		return this.playerName.compareTo(p1.getPlayerName());
 	}
+
+
+
+	public abstract BoardCell pickLocation(int rollLength);
 }
