@@ -5,7 +5,7 @@ public class BoardCell {
 	private int col;
 	private char initial;
 	private Boolean isDoor = false;
-	private DoorDirection direction;
+	private DoorDirection direction = DoorDirection.NONE;
 	public static char WalkwayChar;
 	
 	public BoardCell(int row, int col){

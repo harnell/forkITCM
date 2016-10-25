@@ -16,5 +16,11 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setLastRoom(char lastRoom) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

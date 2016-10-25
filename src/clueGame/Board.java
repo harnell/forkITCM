@@ -53,10 +53,7 @@ public class Board {
 	private static Board theInstance = new Board();
 	// ctor is static to ensure only one can be created
 	private Board() {}
-	// this method returns the only Board
-	public static Board getInstance() {
-		return theInstance;
-	}
+	
 	public void initialize() {
 		try{
 			loadRoomConfig();
@@ -296,7 +293,84 @@ public class Board {
 		targets.clear();
 		calcTargetsRecursive(cell, pathLength);
 	}
-
+	
+	/*
+	 * Checks if the doorway is in the correct direction for the player to enter it based on the cell location
+	 */
+	private static boolean isDoorRightWay(BoardCell[][] board, int cellRow, int cellCol, DoorDirection whichWay) {
+		if(board[cellRow][cellCol].isDoorway()) {
+			if(board[cellRow][cellCol].getDoorDirection() != whichWay) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+	
+	/*
+	 * Converts colors when inputting person.txt items
+	 */
+	public Color convertColor(String strColor) {
+	    Color color; 
+	    try {     
+	        // We can use reflection to convert the string to a color
+	        Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+	        color = (Color)field.get(null); 
+	    } catch (Exception e) {  
+	        color = null; // Not defined  
+	    }
+	    return color;
+	}
+	
+	/*
+	 * Creates the solution to the game
+	 */
+	public void makeSolution(){
+		int randroom = (int) (Math.random()*9);
+		int randweapon = (int) (Math.random()*6 + 8);
+		int randperson = (int) (Math.random()*6 + 13);
+		String room = deck.remove(randroom).getCardName();
+		String weapon = deck.remove(randweapon).getCardName();
+		String person = deck.remove(randperson).getCardName();
+		theAnswer = new Solution(person, room, weapon);
+	}
+	
+	/*
+	 * Deals the deck<> to players
+	 */
+	public void dealCards(){
+		ArrayList<Card> tempDeck = new ArrayList<Card>(18);
+		for (Card c: deck){
+			tempDeck.add(c);
+		}
+		for (Player p: players){
+			Set<Card> cards = new HashSet<Card>();
+			for (int i = 0; i < 3; i++){
+				int rand = (int) (Math.random()*tempDeck.size());
+				cards.add(tempDeck.remove(rand));
+			}
+			p.setMyCards(cards);
+		}
+	}
+	
+	/*
+	 * Getters
+	 * and
+	 * Setters
+	 * 
+	 */
+	
+	/*
+	 * this method returns the only Board
+	 */
+	public static Board getInstance() {
+		return theInstance;
+	}
+	
 	/*
 	 * Returns adjacencey list
 	 */
@@ -361,74 +435,25 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
-	/*
-	 * Checks if the doorway is in the correct direction for the player to enter it based on the cell location
-	 * 
-	 */
-	private static boolean isDoorRightWay(BoardCell[][] board, int cellRow, int cellCol, DoorDirection whichWay) {
-		if(board[cellRow][cellCol].isDoorway()) {
-			if(board[cellRow][cellCol].getDoorDirection() != whichWay) {
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
-		else {
-			return true;
-		}
-	}
-	
-	public Color convertColor(String strColor) {
-	    Color color; 
-	    try {     
-	        // We can use reflection to convert the string to a color
-	        Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
-	        color = (Color)field.get(null); 
-	    } catch (Exception e) {  
-	        color = null; // Not defined  
-	    }
-	    return color;
-	}
-	public void makeSolution(){
-		int randroom = (int) (Math.random()*9);
-		int randweapon = (int) (Math.random()*6 + 8);
-		int randperson = (int) (Math.random()*6 + 13);
-		String room = deck.remove(randroom).getCardName();
-		String weapon = deck.remove(randweapon).getCardName();
-		String person = deck.remove(randperson).getCardName();
-		theAnswer = new Solution(person, room, weapon);
-	}
-	public void dealCards(){
-		ArrayList<Card> tempDeck = new ArrayList<Card>(18);
-		for (Card c: deck){
-			tempDeck.add(c);
-		}
-		for (Player p: players){
-			Set<Card> cards = new HashSet<Card>();
-			for (int i = 0; i < 3; i++){
-				int rand = (int) (Math.random()*tempDeck.size());
-				cards.add(tempDeck.remove(rand));
-			}
-			p.setMyCards(cards);
-		}
-	}
-
 
 	public ArrayList<Card> getPersonDeck() {
 		return personDeck;
 	}
+	
 	public ArrayList<Card> getWeaponsDeck() {
 		return weaponsDeck;
 	}
+	
 	public ArrayList<Card> getRoomDeck() {
 		return roomDeck;
 	}
+	
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+	
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
+	
 }

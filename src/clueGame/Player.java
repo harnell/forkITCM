@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Player implements Comparable<Object>{
@@ -20,6 +21,7 @@ public abstract class Player implements Comparable<Object>{
 
 	public void setMyCards(Set<Card> myCards) {
 		this.myCards = myCards;
+		seenCards = myCards;
 	}
 
 
@@ -30,6 +32,7 @@ public abstract class Player implements Comparable<Object>{
 		this.row = row;
 		this.column = column;
 		this.color = color;
+		seenCards = new HashSet<Card>();
 	}
 
 	 
@@ -45,7 +48,7 @@ public abstract class Player implements Comparable<Object>{
 	public int getRow() {
 		return row;
 	}
-
+	
 	public Color getColor() {
 		return color;
 	}
@@ -63,4 +66,5 @@ public abstract class Player implements Comparable<Object>{
 
 
 	public abstract BoardCell pickLocation(int rollLength);
+	public abstract void setLastRoom(char lastRoom);
 }
