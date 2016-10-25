@@ -22,5 +22,11 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean makeAccusation() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

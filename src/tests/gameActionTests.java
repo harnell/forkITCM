@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
 import clueGame.ComputerPlayer;
 
 public class gameActionTests {
@@ -190,11 +191,18 @@ private static Board board;
 	
 	@Test
 	public void makeAccusation(){
-		
+		ComputerPlayer tester = new ComputerPlayer("tester", 21, 15, Color.blue);
+		System.out.println(board.getTheAnswer().toString());
+		for (Card c: board.getDeck()){
+			tester.addCardToSeenCards(c);
+			System.out.println(c.toString());
+		}
+		assertTrue(tester.makeAccusation());
+
 	}
 	
 	@Test
-	public void creatSuggestion(){
+	public void createSuggestion(){
 		
 	}
 	

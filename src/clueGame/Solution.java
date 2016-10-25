@@ -11,4 +11,19 @@ public class Solution {
 		this.room = room;
 		this.weapon = weapon;
 	}
+	
+	public boolean equals(Solution sol){
+		if (sol.person.equals(this.person) && sol.room.equals(this.room) && sol.weapon.equals(this.weapon)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Solution [person=" + person + ", room=" + room + ", weapon=" + weapon + "]";
+	}
+	
 }

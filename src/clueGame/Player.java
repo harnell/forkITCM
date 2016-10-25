@@ -10,10 +10,14 @@ public abstract class Player implements Comparable<Object>{
 	 protected int row;
 	 protected int column;
 	 private Color color;
-	 private Set<Card> myCards;
-	 private Set<Card> seenCards;
+	 protected Set<Card> myCards;
+	 protected Set<Card> seenCards;
 	 
-	 public Set<Card> getMyCards() {
+
+
+
+
+	public Set<Card> getMyCards() {
 		return myCards;
 	}
 
@@ -34,6 +38,7 @@ public abstract class Player implements Comparable<Object>{
 		this.color = color;
 		seenCards = new HashSet<Card>();
 	}
+
 
 	 
 
@@ -63,8 +68,18 @@ public abstract class Player implements Comparable<Object>{
 		return this.playerName.compareTo(p1.getPlayerName());
 	}
 
+	public void addCardToSeenCards(Card card) {
+		this.seenCards.add(card);
+	}
+	public void addSetToSeenCards(Set<Card> seenCards) {
+		this.seenCards.addAll(seenCards);
+	}
+	public void setSeenCards(Set<Card> seenCards) {
+		this.seenCards = seenCards;
+	}
 
 
+	public abstract boolean makeAccusation();
 	public abstract BoardCell pickLocation(int rollLength);
 	public abstract void setLastRoom(char lastRoom);
 }

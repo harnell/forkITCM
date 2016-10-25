@@ -37,6 +37,8 @@ public class Board {
 	//Solution
 	private Solution theAnswer;
 	
+
+
 	//Decks of cards
 	private ArrayList<Card> deck = new ArrayList<Card>(21);
 	private ArrayList<Card> personDeck = new ArrayList<Card>();
@@ -60,6 +62,7 @@ public class Board {
 			loadBoardConfig();
 			loadWeaponsConfig();
 			loadPersonConfig();
+			makeSolution();
 		}catch(FileNotFoundException | BadConfigFormatException e){
 			e.printStackTrace();
 		}
@@ -357,6 +360,10 @@ public class Board {
 		}
 	}
 	
+	public boolean checkAccusation(Solution accusation){
+		return theAnswer.equals(accusation);
+	}
+
 	/*
 	 * Getters
 	 * and
@@ -455,5 +462,9 @@ public class Board {
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
+	public Solution getTheAnswer() {
+		return theAnswer;
+	}
+
 	
 }
