@@ -370,7 +370,14 @@ public class Board {
 		if (playas.isEmpty()){
 			playas = this.players;
 		}
-		for (int i = currentPlayerIndex+1; i != currentPlayerIndex;){
+		int startPlayerIndex;
+		if (currentPlayerIndex == playas.size()-1){
+			startPlayerIndex = -1;						//if currentPlayerIndex is last index in the ArrayList, causes for loop to start at i=0
+		}
+		else{
+			startPlayerIndex = currentPlayerIndex;
+		}
+		for (int i = startPlayerIndex+1; i != currentPlayerIndex;){						//this for loop is used to simulate a queue
 			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
 			if (possibleDisproved != null){
 				return possibleDisproved;
@@ -485,5 +492,8 @@ public class Board {
 		return theAnswer;
 	}
 
+	
+	
+	
 	
 }

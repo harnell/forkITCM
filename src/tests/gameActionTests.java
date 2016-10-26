@@ -3,18 +3,15 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.Card;
-import clueGame.CardType;
-import clueGame.ComputerPlayer;
-import clueGame.Solution;
+import clueGame.*;
 
 public class gameActionTests {
 	
@@ -382,6 +379,58 @@ private static Board board;
 	
 	@Test
 	public void handleSuggestion(){
+		Card weapon1 = new Card("Needler", CardType.WEAPON);
+		Card weapon2 = new Card("Energy Sword", CardType.WEAPON);
+		Card weapon3 = new Card("Spartan Laser", CardType.WEAPON);
+		Card weaponSol = new Card("Brute Shot", CardType.WEAPON);
+		Card person1 = new Card("Sargent Johnson", CardType.PERSON);
+		Card person2 = new Card("Oracle", CardType.PERSON);
+		Card person3 = new Card("Cortana", CardType.PERSON);
+		Card personSol = new Card("Arbiter", CardType.PERSON);
+		Card room1 = new Card("Bean Bag Room", CardType.ROOM);
+		Card room2 = new Card("Rumpus Room", CardType.ROOM);
+		Card room3 = new Card("Furnished Gazebo", CardType.ROOM);
+		Card roomSol = new Card("Grotto", CardType.ROOM);
+		ArrayList<Player> players = new ArrayList<Player>(3);
+		players.add(new HumanPlayer("Master Chief", 4, 6, Color.green)); //Room = C
+		players.add(new ComputerPlayer("Arbiter", 3, 13, Color.yellow)); //Room = G
+		players.add(new ComputerPlayer("Gravemind", 16, 13, Color.orange)); //Room = W
+		players.get(0).setMyCards(new HashSet<Card>(Arrays.asList(weapon1, person1, room1)));
+		players.get(1).setMyCards(new HashSet<Card>(Arrays.asList(weapon2, person2, room2)));
+		players.get(2).setMyCards(new HashSet<Card>(Arrays.asList(weapon3, person3, room3)));
+		
+		//query that no players can disprove, ensure null returned
+		Solution theSolution = new Solution(personSol.getCardName(), roomSol.getCardName(), weaponSol.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 2), null);
+		
+		//query that only the accusing player can disprove, ensure null
+		theSolution = new Solution(person2.getCardName(), roomSol.getCardName(), weapon2.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 1), null);
+		
+		//query that only the human can disprove, human is not accuser, verify return card from human’s hand
+		theSolution = new Solution(person1.getCardName(), roomSol.getCardName(), weaponSol.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 1), person1);
+		
+		//query that only the human can disprove, human is the accuser, ensure null returned
+		theSolution = new Solution(person1.getCardName(), roomSol.getCardName(), weapon1.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 0), null);
+		
+		//several queries with player 0 as accuser. Do a query that player 1 and 2 can disprove, ensure player 1 disproves
+		theSolution = new Solution(person2.getCardName(), room3.getCardName(), weaponSol.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 0), person2);
+		
+		theSolution = new Solution(personSol.getCardName(), room2.getCardName(), weapon3.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 0), room2);
+		
+		theSolution = new Solution(person3.getCardName(), roomSol.getCardName(), weapon2.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 0), weapon2);
+		
+		//query that human and another player can disprove, ensure correct response
+		theSolution = new Solution(person3.getCardName(), room1.getCardName(), weapon2.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 2), room1);
+		
+		theSolution = new Solution(person3.getCardName(), room1.getCardName(), weapon2.getCardName());
+		assertEquals(board.handleSuggestion(theSolution, players, 1), person3);
 		
 	}
 	
