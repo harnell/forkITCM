@@ -10,6 +10,7 @@ import org.junit.Test;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
 
 public class gameActionTests {
@@ -190,7 +191,8 @@ private static Board board;
 	}
 	
 	@Test
-	public void makeAccusation(){
+	public void testMakeAccusation(){
+		// Checking for exact solution
 		ComputerPlayer tester = new ComputerPlayer("tester", 21, 15, Color.blue);
 		System.out.println(board.getTheAnswer().toString());
 		for (Card c: board.getDeck()){
@@ -198,7 +200,45 @@ private static Board board;
 			System.out.println(c.toString());
 		}
 		assertTrue(tester.makeAccusation());
-
+		
+		// Checking for wrong person
+		ComputerPlayer testerPerson = new ComputerPlayer("tester", 21, 15, Color.blue);
+		System.out.println(board.getTheAnswer().toString());
+		for (Card c: board.getDeck()){
+			if (!c.getType().equals(CardType.PERSON)){
+				testerPerson.addCardToSeenCards(c);
+				System.out.println(c.toString());
+			}
+		}
+		Card personAnswer = new Card(board.getTheAnswer().person, CardType.PERSON);
+		testerPerson.addCardToSeenCards(personAnswer);
+		assertFalse(testerPerson.makeAccusation());
+		
+		// Checking for wrong room
+		ComputerPlayer testerRoom = new ComputerPlayer("tester", 21, 15, Color.blue);
+		System.out.println(board.getTheAnswer().toString());
+		for (Card c: board.getDeck()){
+			if (!c.getType().equals(CardType.ROOM)){
+				testerRoom.addCardToSeenCards(c);
+				System.out.println(c.toString());
+			}
+		}
+		Card roomAnswer = new Card(board.getTheAnswer().room, CardType.ROOM);
+		testerRoom.addCardToSeenCards(roomAnswer);
+		assertFalse(testerRoom.makeAccusation());
+		
+		// Checking for wrong weapon
+		ComputerPlayer testerWeapon = new ComputerPlayer("tester", 21, 15, Color.blue);
+		System.out.println(board.getTheAnswer().toString());
+		for (Card c: board.getDeck()){
+			if (!c.getType().equals(CardType.WEAPON)){
+				testerWeapon.addCardToSeenCards(c);
+				System.out.println(c.toString());
+			}
+		}
+		Card weaponAnswer = new Card(board.getTheAnswer().weapon, CardType.WEAPON);
+		testerWeapon.addCardToSeenCards(weaponAnswer);
+		assertFalse(testerWeapon.makeAccusation());
 	}
 	
 	@Test

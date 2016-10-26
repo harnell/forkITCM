@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -61,21 +62,49 @@ public class ComputerPlayer extends Player {
 		Set<Card> weaponToAccuse = new HashSet<Card>();
 		String person;
 		Set<Card> personToAccuse = new HashSet<Card>();
-		for (Card c: board.getRoomDeck()){
-			if (!seenCards.contains(c)){
-				roomToAccuse.add(c);
+
+		//Rooms
+		ArrayList<Card> possibleRooms = new ArrayList<Card>();
+		for (Card t : board.getRoomDeck()){
+			possibleRooms.add(t);
+		}
+		for (Card possibleRoom: board.getRoomDeck()){
+			for (Card seen : seenCards){
+				if (seen.getCardName().equals(possibleRoom.getCardName())){
+					possibleRooms.remove(possibleRoom);
+				}
 			}
 		}
-		for (Card c: board.getWeaponsDeck()){
-			if (!seenCards.contains(c)){
-				weaponToAccuse.add(c);
+		roomToAccuse.addAll(possibleRooms);
+		
+		//Weapons
+		ArrayList<Card> possibleWeapons = new ArrayList<Card>();
+		for (Card t : board.getWeaponsDeck()){
+			possibleWeapons.add(t);
+		}
+		for (Card possibleWeapon: board.getWeaponsDeck()){
+			for (Card seen : seenCards){
+				if (seen.getCardName().equals(possibleWeapon.getCardName())){
+					possibleWeapons.remove(possibleWeapon);
+				}
 			}
 		}
-		for (Card c: board.getPersonDeck()){
-			if (!seenCards.contains(c)){
-				personToAccuse.add(c);
+		weaponToAccuse.addAll(possibleWeapons);
+
+		//Persons
+		ArrayList<Card> possiblePersons = new ArrayList<Card>();
+		for (Card t : board.getPersonDeck()){
+			possiblePersons.add(t);
+		}
+		for (Card possiblePerson: board.getPersonDeck()){
+			for (Card seen : seenCards){
+				if (seen.getCardName().equals(possiblePerson.getCardName())){
+					possiblePersons.remove(possiblePerson);
+				}
 			}
 		}
+		personToAccuse.addAll(possiblePersons);
+
 		room = randomFromSet(roomToAccuse).getCardName();
 		weapon = randomFromSet(weaponToAccuse).getCardName();
 		person = randomFromSet(personToAccuse).getCardName();
