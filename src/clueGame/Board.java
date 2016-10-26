@@ -363,6 +363,11 @@ public class Board {
 	public boolean checkAccusation(Solution accusation){
 		return theAnswer.equals(accusation);
 	}
+	
+	public Card handleSuggestion(Solution suggestion){
+		
+		return null;
+	}
 
 	/*
 	 * Getters

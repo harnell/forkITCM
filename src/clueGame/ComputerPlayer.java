@@ -12,6 +12,10 @@ public class ComputerPlayer extends Player {
 	private char lastRoom = 'X';
 
 	private Solution accusation;
+	private Solution suggestion;
+
+
+
 
 
 	private Board board = Board.getInstance();
@@ -49,11 +53,11 @@ public class ComputerPlayer extends Player {
 	public boolean makeAccusation(){
 		// if in room, make accusation else make accusaton null
 		generateAccusation();
-		System.out.println(this.accusation.toString());
 		boolean result = board.checkAccusation(accusation);
 		return result;
 	}
-	
+
+
 	public void generateAccusation() {
 		// logic for accustation
 		String room;
@@ -109,12 +113,55 @@ public class ComputerPlayer extends Player {
 		weapon = randomFromSet(weaponToAccuse).getCardName();
 		person = randomFromSet(personToAccuse).getCardName();
 		
-		Solution acc = new Solution(person, room, weapon);		
+		Solution acc = new Solution(person, room, weapon);
 		this.accusation = acc;
 	}
 
-	public void createSuggestion(){
+	@Override
+	public Card createSuggestion(){
+		generateSuggestion();
+		System.out.println("Suggestion " + this.suggestion.toString());
+		Card disproovenCard = board.handleSuggestion(this.suggestion);
+		return disproovenCard;
+	}
+	
+	public void generateSuggestion(){
+		String roomImIn = board.getLegend().get(board.getCellAt(this.row, this.column).getInitial());
 		
+		
+		Set<Card> personToSuggest = new HashSet<Card>();
+		ArrayList<Card> possiblePersons = new ArrayList<Card>();
+		for (Card t : board.getPersonDeck()){
+			possiblePersons.add(t);
+		}
+		for (Card possiblePerson: board.getPersonDeck()){
+			for (Card seen : seenCards){
+				if (seen.getCardName().equals(possiblePerson.getCardName())){
+					possiblePersons.remove(possiblePerson);
+				}
+			}
+		}
+		personToSuggest.addAll(possiblePersons);
+		String personIChoose = randomFromSet(personToSuggest).getCardName();
+		
+		// checks against seen cards and selects based on random from not seens
+		Set<Card> weaponToSuggest = new HashSet<Card>();
+		ArrayList<Card> possibleWeapons = new ArrayList<Card>();
+		for (Card t : board.getWeaponsDeck()){
+			possibleWeapons.add(t);
+		}
+		for (Card possibleWeapon: board.getWeaponsDeck()){
+			for (Card seen : seenCards){
+				if (seen.getCardName().equals(possibleWeapon.getCardName())){
+					possibleWeapons.remove(possibleWeapon);
+				}
+			}
+		}
+		weaponToSuggest.addAll(possibleWeapons);
+		String weaponIChoose = randomFromSet(weaponToSuggest).getCardName();
+		
+		this.suggestion = new Solution(personIChoose, roomImIn, weaponIChoose);
+
 	}
 	
 	private <T> T randomFromSet(Set<T> needRand){
@@ -129,8 +176,14 @@ public class ComputerPlayer extends Player {
 		}
 		return null;
 	}
+	
+
 	@Override
 	public void setLastRoom(char lastRoom) {
 		this.lastRoom = lastRoom;
+	}
+	
+	public Solution getSuggestion() {
+		return suggestion;
 	}
 }

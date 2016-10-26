@@ -3,6 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -194,20 +196,16 @@ private static Board board;
 	public void testMakeAccusation(){
 		// Checking for exact solution
 		ComputerPlayer tester = new ComputerPlayer("tester", 21, 15, Color.blue);
-		System.out.println(board.getTheAnswer().toString());
 		for (Card c: board.getDeck()){
 			tester.addCardToSeenCards(c);
-			System.out.println(c.toString());
 		}
 		assertTrue(tester.makeAccusation());
 		
 		// Checking for wrong person
 		ComputerPlayer testerPerson = new ComputerPlayer("tester", 21, 15, Color.blue);
-		System.out.println(board.getTheAnswer().toString());
 		for (Card c: board.getDeck()){
 			if (!c.getType().equals(CardType.PERSON)){
 				testerPerson.addCardToSeenCards(c);
-				System.out.println(c.toString());
 			}
 		}
 		Card personAnswer = new Card(board.getTheAnswer().person, CardType.PERSON);
@@ -216,11 +214,9 @@ private static Board board;
 		
 		// Checking for wrong room
 		ComputerPlayer testerRoom = new ComputerPlayer("tester", 21, 15, Color.blue);
-		System.out.println(board.getTheAnswer().toString());
 		for (Card c: board.getDeck()){
 			if (!c.getType().equals(CardType.ROOM)){
 				testerRoom.addCardToSeenCards(c);
-				System.out.println(c.toString());
 			}
 		}
 		Card roomAnswer = new Card(board.getTheAnswer().room, CardType.ROOM);
@@ -229,21 +225,123 @@ private static Board board;
 		
 		// Checking for wrong weapon
 		ComputerPlayer testerWeapon = new ComputerPlayer("tester", 21, 15, Color.blue);
-		System.out.println(board.getTheAnswer().toString());
 		for (Card c: board.getDeck()){
 			if (!c.getType().equals(CardType.WEAPON)){
 				testerWeapon.addCardToSeenCards(c);
-				System.out.println(c.toString());
 			}
 		}
 		Card weaponAnswer = new Card(board.getTheAnswer().weapon, CardType.WEAPON);
 		testerWeapon.addCardToSeenCards(weaponAnswer);
 		assertFalse(testerWeapon.makeAccusation());
+		
 	}
 	
 	@Test
-	public void createSuggestion(){
+	public void createSuggestionComputerNotFull(){
+		ComputerPlayer testerSuggest = new ComputerPlayer("tester", 6, 18, Color.blue); // Room is Easter Isle
+		Set<Card> seenTestNotFull = new HashSet<Card>();
+		seenTestNotFull.add(new Card("Needler", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Energy Sword", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Sargent Johnson", CardType.PERSON));
+		seenTestNotFull.add(new Card("Oracle", CardType.PERSON));
+		testerSuggest.addSetToSeenCards(seenTestNotFull);
 		
+		boolean weapon_Needler = true;
+        boolean weapon_eSword = true;
+        boolean person_Oracle = true;
+        boolean person_Sarg = true;	        
+
+	    // Run the test a large number of times
+	    for (int i=0; i<100; i++) {	  
+	    	testerSuggest.createSuggestion();
+	    	
+	    	String suggestedWeapon = testerSuggest.getSuggestion().weapon;
+	    	String suggestedPerson = testerSuggest.getSuggestion().person;
+	        if (suggestedWeapon.equals("Needler"))
+	        	weapon_Needler = false;
+	        else if (suggestedWeapon.equals("Energy Sword"))
+	        	weapon_eSword = false;
+	        else if (suggestedPerson.equals("Oracle"))
+	        	person_Oracle = false;
+	        else if (suggestedPerson.equals("Sargent Johnson"))
+	        	person_Sarg = false;
+	        }
+	        // Ensure each target was selected at least once
+	        assertTrue(testerSuggest.getSuggestion().room.equals("Easter Isle"));
+	        assertTrue(weapon_Needler);
+	        assertTrue(weapon_eSword);	
+	        assertTrue(person_Oracle);
+	        assertTrue(person_Sarg);
+	}
+	
+	
+	//Test a created suggestion when there is only 1 weapon and person not seen
+	@Test
+	public void createSuggestionComputerSingleWeaponAndPerson(){
+		ComputerPlayer testerSuggest = new ComputerPlayer("tester", 6, 18, Color.blue); // Room is Easter Isle
+		Set<Card> seenTestNotFull = new HashSet<Card>();
+		seenTestNotFull.add(new Card("Needler", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Energy Sword", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Spartan Laser", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Brute Shot", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Plasma Grenade", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Sargent Johnson", CardType.PERSON));
+		seenTestNotFull.add(new Card("Oracle", CardType.PERSON));
+		seenTestNotFull.add(new Card("Cortana", CardType.PERSON));
+		seenTestNotFull.add(new Card("Arbiter", CardType.PERSON));
+		seenTestNotFull.add(new Card("Gravemind", CardType.PERSON));
+		testerSuggest.addSetToSeenCards(seenTestNotFull);
+		
+		boolean weapon_Needler = true;
+        boolean weapon_eSword = true;
+        boolean weapon_sLaser = true;
+        boolean weapon_bShot = true;
+        boolean weapon_pGrenade = true;
+        boolean person_Oracle = true;
+        boolean person_Sarg = true;
+        boolean person_Cortana = true;
+        boolean person_Gravemind = true;
+        boolean person_Arbiter = true;
+
+	    // Run the test a large number of times
+	    for (int i=0; i<100; i++) {	  
+	    	testerSuggest.createSuggestion();
+	    	
+	    	String suggestedWeapon = testerSuggest.getSuggestion().weapon;
+	    	String suggestedPerson = testerSuggest.getSuggestion().person;
+	        if (suggestedWeapon.equals("Needler"))
+	        	weapon_Needler = false;
+	        else if (suggestedWeapon.equals("Energy Sword"))
+	        	weapon_eSword = false;
+	        else if (suggestedWeapon.equals("Spartan Laser"))
+	        	weapon_sLaser = false;
+	        else if (suggestedWeapon.equals("Brute Shot"))
+	        	weapon_bShot = false;
+	        else if (suggestedWeapon.equals("Plasma Grenade"))
+	        	weapon_pGrenade = false;
+	        else if (suggestedPerson.equals("Oracle"))
+	        	person_Oracle = false;
+	        else if (suggestedPerson.equals("Sargent Johnson"))
+	        	person_Sarg = false;
+	        else if (suggestedPerson.equals("Cortana"))
+	        	person_Cortana = false;
+	        else if (suggestedPerson.equals("Gravemind"))
+	        	person_Gravemind = false;
+	        else if (suggestedPerson.equals("Arbiter"))
+	        	person_Arbiter = false;
+	        }
+	        // Ensure each target was selected at least once
+	        assertTrue(testerSuggest.getSuggestion().room.equals("Easter Isle"));
+	        assertTrue(weapon_Needler);
+	        assertTrue(weapon_eSword);
+	        assertTrue(weapon_sLaser);
+	        assertTrue(weapon_bShot);
+	        assertTrue(weapon_pGrenade);
+	        assertTrue(person_Oracle);
+	        assertTrue(person_Sarg);
+	        assertTrue(person_Cortana);
+	        assertTrue(person_Gravemind);
+	        assertTrue(person_Arbiter);
 	}
 	
 	@Test

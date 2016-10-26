@@ -82,4 +82,5 @@ public abstract class Player implements Comparable<Object>{
 	public abstract boolean makeAccusation();
 	public abstract BoardCell pickLocation(int rollLength);
 	public abstract void setLastRoom(char lastRoom);
+	public abstract Card createSuggestion();
 }

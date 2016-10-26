@@ -28,5 +28,12 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public Card createSuggestion() {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
