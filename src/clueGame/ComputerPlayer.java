@@ -118,11 +118,11 @@ public class ComputerPlayer extends Player {
 	}
 
 	@Override
-	public Card createSuggestion(){
+	public Solution createSuggestion(){
 		generateSuggestion();
 		//System.out.println("Suggestion " + this.suggestion.toString());
-		Card disproovenCard = board.handleSuggestion(this.suggestion);
-		return disproovenCard;
+		//Card disproovenCard = board.handleSuggestion(this.suggestion, board.getPlayers(), 0);
+		return this.suggestion;
 	}
 	
 	public void generateSuggestion(){

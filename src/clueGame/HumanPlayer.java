@@ -30,7 +30,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public Card createSuggestion() {
+	public Solution createSuggestion() {
 		return null;
 		// TODO Auto-generated method stub
 		

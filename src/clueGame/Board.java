@@ -7,7 +7,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -364,8 +366,20 @@ public class Board {
 		return theAnswer.equals(accusation);
 	}
 	
-	public Card handleSuggestion(Solution suggestion){
-		
+	public Card handleSuggestion(Solution suggestion, ArrayList<Player> playas, int currentPlayerIndex){
+		if (playas.isEmpty()){
+			playas = this.players;
+		}
+		for (int i = currentPlayerIndex+1; i != currentPlayerIndex;){
+			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
+			if (possibleDisproved != null){
+				return possibleDisproved;
+			}
+			if (i == playas.size()-1)
+				i = 0;
+			else
+				i++;
+		}
 		return null;
 	}
 
