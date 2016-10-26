@@ -59,8 +59,12 @@ public abstract class Player implements Comparable<Object>{
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
-		//comment
-		 return null;
+		for(Card seen : myCards){
+			if (seen.getCardName().equals(suggestion.person) || seen.getCardName().equals(suggestion.weapon) || seen.getCardName().equals(suggestion.room)){
+				return seen;
+			}
+		}
+		return null;
 	 }
 
 
