@@ -112,7 +112,7 @@ public class ComputerPlayer extends Player {
 		room = randomFromSet(roomToAccuse).getCardName();
 		weapon = randomFromSet(weaponToAccuse).getCardName();
 		person = randomFromSet(personToAccuse).getCardName();
-		
+	
 		Solution acc = new Solution(person, room, weapon);
 		this.accusation = acc;
 	}
@@ -120,7 +120,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public Card createSuggestion(){
 		generateSuggestion();
-		System.out.println("Suggestion " + this.suggestion.toString());
+		//System.out.println("Suggestion " + this.suggestion.toString());
 		Card disproovenCard = board.handleSuggestion(this.suggestion);
 		return disproovenCard;
 	}

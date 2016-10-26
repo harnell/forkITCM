@@ -14,6 +14,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.Solution;
 
 public class gameActionTests {
 	
@@ -345,8 +346,38 @@ private static Board board;
 	}
 	
 	@Test
-	public void disproveSuggestion(){
-		
+	public void disproveSuggestionOneMatchingCard(){
+		ComputerPlayer testerSuggest = new ComputerPlayer("tester", 5, 0, Color.blue);
+		Set<Card> seenTestNotFull = new HashSet<Card>();
+		seenTestNotFull.add(new Card("Needler", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Oracle", CardType.PERSON));
+		seenTestNotFull.add(new Card("Grotto", CardType.ROOM));
+		testerSuggest.setMyCards(seenTestNotFull);
+		assertTrue(testerSuggest.disproveSuggestion(new Solution("Oracle", "Easter Isle", "Spartan Laser")).equals(new Card("Oracle", CardType.PERSON)));
+	}
+	
+	@Test
+	public void disproveSuggestionMultipleMatchingCards(){
+		ComputerPlayer testerSuggest = new ComputerPlayer("tester", 5, 0, Color.blue);
+		Set<Card> seenTestNotFull = new HashSet<Card>();
+		seenTestNotFull.add(new Card("Needler", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Oracle", CardType.PERSON));
+		seenTestNotFull.add(new Card("Grotto", CardType.ROOM));
+		testerSuggest.setMyCards(seenTestNotFull);
+		assertTrue(testerSuggest.disproveSuggestion(new Solution("Oracle", "Grotto", "Needler")).equals(new Card("Oracle", CardType.PERSON)) || 
+				   testerSuggest.disproveSuggestion(new Solution("Oracle", "Grotto", "Needler")).equals(new Card("Grotto", CardType.ROOM)) || 
+				   testerSuggest.disproveSuggestion(new Solution("Oracle", "Grotto", "Needler")).equals(new Card("Needler", CardType.WEAPON)));
+	}
+	
+	@Test
+	public void disproveSuggestionZeroMatchingCards(){
+		ComputerPlayer testerSuggest = new ComputerPlayer("tester", 5, 0, Color.blue);
+		Set<Card> seenTestNotFull = new HashSet<Card>();
+		seenTestNotFull.add(new Card("Needler", CardType.WEAPON));
+		seenTestNotFull.add(new Card("Oracle", CardType.PERSON));
+		seenTestNotFull.add(new Card("Grotto", CardType.ROOM));
+		testerSuggest.setMyCards(seenTestNotFull);
+		assertEquals(testerSuggest.disproveSuggestion(new Solution("Master Chief", "Easter Isle", "Spartan Laser")), null);
 	}
 	
 	@Test
