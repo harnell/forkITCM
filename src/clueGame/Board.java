@@ -377,24 +377,26 @@ public class Board {
 		else{
 			startPlayerIndex = currentPlayerIndex;
 		}
-		for (int i = startPlayerIndex+1; i != currentPlayerIndex;){						//this for loop is used to simulate a queue
+		for (int i = startPlayerIndex+1; i != currentPlayerIndex;){			//this for loop is used to simulate a queue
 			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
 			if (possibleDisproved != null){
 				return possibleDisproved;
 			}
-			if (i == playas.size()-1)
-				i = 0;
-			else
-				i++;
+//			if (i == playas.size()-1)
+//				i = 0;
+//			else
+//				i++;
+			i++;
+			i = i % playas.size();
+			
+			
 		}
 		return null;
 	}
 
-	/*
-	 * Getters
+	/* Getters
 	 * and
 	 * Setters
-	 * 
 	 */
 	
 	/*
