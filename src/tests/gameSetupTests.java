@@ -2,24 +2,15 @@ package tests;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.Card;
-import clueGame.CardType;
-import clueGame.ComputerPlayer;
-import clueGame.HumanPlayer;
-import clueGame.Player;
+import clueGame.*;
 
 public class gameSetupTests {
 	
@@ -105,7 +96,6 @@ public class gameSetupTests {
 	public void TestPlayersDealtHands(){
 		board.makeSolution();
 		board.dealCards();
-		ArrayList<Card> toBeDealt = board.getDeck();
 		ArrayList<Card> hasBeenDealt = new ArrayList<Card>();
 		ArrayList<Player> tempPlayers = board.getPlayers();
 		for (Player p: tempPlayers){

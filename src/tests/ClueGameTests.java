@@ -7,13 +7,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.DoorDirection;
+import clueGame.*;
 
 public class ClueGameTests {
 	public static final int LEGEND_SIZE = 11;

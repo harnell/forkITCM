@@ -7,12 +7,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Board {
 	private static final int MAX_BOARD_SIZE = 50;
@@ -94,6 +91,7 @@ public class Board {
 			}
 			//Check if config file has proper formatting
 			if(info.length != 3 || (!(info[2].contains("Card")) && !(info[2].contains("Other")))) { 
+				in.close();
 				throw new BadConfigFormatException("Config file not in proper format");
 			}
 		}
@@ -125,6 +123,7 @@ public class Board {
 				board[lineNumber][i] = new BoardCell(lineNumber, i, info[i]);
 				//Throw exception if room is not contained in legend
 				if(!rooms.containsKey(info[i].charAt(0))){ 
+					in.close();
 					throw new BadConfigFormatException("Room is not in legend");
 				}
 			}
@@ -139,6 +138,7 @@ public class Board {
 			}
 			//Throw exception if all of the columns are not the same length
 			if(j != numColumns){
+				in.close();
 				throw new BadConfigFormatException("Number of columns are not consistent for all rows.");
 			}
 		}
@@ -152,8 +152,7 @@ public class Board {
 		FileReader personReader = new FileReader(personConfigFile);
 
 		Scanner personIn = new Scanner(personReader);
-		
-		players = new ArrayList<Player>();														//TODO: make this ArrayList<>
+		players = new ArrayList<Player>();
 		
 		//This will import all of the person cards
 		for (int i = 0; i < 6; i++){
@@ -189,6 +188,7 @@ public class Board {
 			String line = weaponsIn.nextLine();
 			String info[] = line.split(", ");
 			if (!(info[0].equals("WEAPON"))){
+				weaponsIn.close();
 				throw new BadConfigFormatException();
 			}
 			else{
@@ -367,29 +367,20 @@ public class Board {
 	}
 	
 	public Card handleSuggestion(Solution suggestion, ArrayList<Player> playas, int currentPlayerIndex){
+		//failsafe if passed in empty players arraylist, meant for testing purposes
 		if (playas.isEmpty()){
 			playas = this.players;
 		}
-		int startPlayerIndex;
-		if (currentPlayerIndex == playas.size()-1){
-			startPlayerIndex = -1;						//if currentPlayerIndex is last index in the ArrayList, causes for loop to start at i=0
-		}
-		else{
-			startPlayerIndex = currentPlayerIndex;
-		}
-		for (int i = startPlayerIndex+1; i != currentPlayerIndex;){			//this for loop is used to simulate a queue
+		
+		//used to ensure that for loop does not start at playas.size(), which is out of bounds
+		int startPlayerIndex = (currentPlayerIndex+1)%playas.size();
+		for (int i = startPlayerIndex; i != currentPlayerIndex;){			//this for loop is used to simulate a queue
 			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
 			if (possibleDisproved != null){
 				return possibleDisproved;
 			}
-//			if (i == playas.size()-1)
-//				i = 0;
-//			else
-//				i++;
 			i++;
 			i = i % playas.size();
-			
-			
 		}
 		return null;
 	}
