@@ -85,7 +85,7 @@ public abstract class Player implements Comparable<Object>{
 
 
 	public abstract boolean makeAccusation();
-	public abstract BoardCell pickLocation(int rollLength);
+	public abstract BoardCell pickLocation(HashSet<BoardCell> targets);
 	public abstract void setLastRoom(char lastRoom);
 	public abstract Solution createSuggestion();
 }

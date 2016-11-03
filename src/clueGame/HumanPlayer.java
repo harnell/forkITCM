@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.HashSet;
 
 public class HumanPlayer extends Player {
 
@@ -10,7 +11,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public BoardCell pickLocation(int rollLength) {
+	public BoardCell pickLocation(HashSet<BoardCell> targets) {
 		return null;
 		// TODO Auto-generated method stub
 		

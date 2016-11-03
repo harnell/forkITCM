@@ -25,11 +25,6 @@ private static Board board;
 	}
 	
 	@Test
-	public void testTargetsNoRooms(){
-		
-	}
-	
-	@Test
 	public void testTargetRandomSelection() {
 	    // Pick a location with no rooms in target, just three targets
 		// Arbiter 3 steps
@@ -38,8 +33,9 @@ private static Board board;
 	    boolean loc_20_5 = false;
 	    boolean loc_18_5 = false;
 	    // Run the test a large number of times
+	    board.calcTargets(board.getPlayers().get(1).getRow(), board.getPlayers().get(1).getColumn(), 3);
 	    for (int i=0; i<100; i++) {
-	        BoardCell selected = board.getPlayers().get(1).pickLocation(3);
+	    	BoardCell selected = board.getPlayers().get(1).pickLocation((HashSet<BoardCell>) board.getTargets());
 	        if (selected == board.getCellAt(19, 6))
 	            loc_19_6 = true;
 	        else if (selected == board.getCellAt(21, 6))
@@ -66,10 +62,10 @@ private static Board board;
 		    // on itself
 		    boolean loc_21_15 = false;
 
-
+		    board.calcTargets(board.getPlayers().get(2).getRow(), board.getPlayers().get(2).getColumn(), 4);
 		    // Run the test a large number of times
 		    for (int i=0; i<100; i++) {
-		        BoardCell selected = board.getPlayers().get(2).pickLocation(4);
+		        BoardCell selected = board.getPlayers().get(2).pickLocation((HashSet<BoardCell>) board.getTargets());
 		        if (selected == board.getCellAt(17, 15))
 		        	loc_17_15 = true;
 		        else if (selected == board.getCellAt(18, 16))
@@ -104,9 +100,10 @@ private static Board board;
 	    boolean loc_11_0 = false;
 	    boolean loc_12_0 = false;
 	    // Run the test a large number of times
+	    board.calcTargets(board.getPlayers().get(5).getRow(), board.getPlayers().get(5).getColumn(), 3);
 	    for (int i=0; i<100; i++) {
 	        board.getPlayers().get(5).setLastRoom('S');
-	        BoardCell selected = board.getPlayers().get(5).pickLocation(3);
+	        BoardCell selected = board.getPlayers().get(5).pickLocation((HashSet<BoardCell>) board.getTargets());
 	        
 	        if (selected == board.getCellAt(10, 3))
 	        	loc_10_3 = true;
@@ -140,10 +137,11 @@ private static Board board;
 		    boolean loc_19_15 = false;
 
 		    // Run the test a large number of times
+	    	ComputerPlayer tester = new ComputerPlayer("Cortana", 21, 15, Color.blue);
+		    board.calcTargets(21, 15, 6);
 		    for (int i=0; i<100; i++) {	  
-		    	ComputerPlayer tester = new ComputerPlayer("Cortana", 21, 15, Color.blue);
 		    	tester.setLastRoom('R');
-		    	BoardCell selected = tester.pickLocation(6);
+		    	BoardCell selected = tester.pickLocation((HashSet<BoardCell>) board.getTargets());
 		        if (selected == board.getCellAt(15, 15))
 		        	loc_15_15 = true;
 		        else if (selected == board.getCellAt(16, 16))
@@ -179,13 +177,18 @@ private static Board board;
 	}
 	
 	@Test
-	public void testTargetsRoomPriority(){
-		BoardCell testOracle = board.getPlayers().get(3).pickLocation(6); //Oracle rolls 6, should enter Easter Isle
+	public void testTargetsRoomPriority() {
+		board.calcTargets(board.getPlayers().get(3).getRow(), board.getPlayers().get(3).getColumn(), 6);
+		BoardCell testOracle = board.getPlayers().get(3).pickLocation((HashSet<BoardCell>) board.getTargets()); //Oracle rolls 6, should enter Easter Isle
 		assertTrue((testOracle.getRow() == 6 && testOracle.getCol() == 18) || (testOracle.getRow() == 10 && testOracle.getCol() == 17));
-		BoardCell testGrave = board.getPlayers().get(5).pickLocation(4); //Gravemind rolls 4, should enter Solarium
+		
+		board.calcTargets(board.getPlayers().get(5).getRow(), board.getPlayers().get(5).getColumn(), 4);
+		BoardCell testGrave = board.getPlayers().get(5).pickLocation((HashSet<BoardCell>) board.getTargets()); //Gravemind rolls 4, should enter Solarium
 		assertEquals(testGrave.getRow(), 12);
 		assertEquals(testGrave.getCol(), 0);
-		BoardCell testSJ = board.getPlayers().get(4).pickLocation(4); //Sargent Johnson rolls 4, should be on (4, 16)
+		
+		board.calcTargets(board.getPlayers().get(4).getRow(), board.getPlayers().get(4).getColumn(), 4);
+		BoardCell testSJ = board.getPlayers().get(4).pickLocation((HashSet<BoardCell>) board.getTargets()); //Sargent Johnson rolls 4, should be on (4, 16)
 		assertEquals(testSJ.getRow(), 4);
 		assertEquals(testSJ.getCol(), 16);
 	}

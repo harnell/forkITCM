@@ -336,8 +336,8 @@ public class Board {
 	 */
 	public void makeSolution(){
 		int randroom = (int) (Math.random()*9);
-		int randweapon = (int) (Math.random()*6 + 8);
-		int randperson = (int) (Math.random()*6 + 13);
+		int randweapon = (int) (Math.random()*6 + 8); //add 8 because rooms are 0-8 of deck, removing 1 before, so starting index of weapon is 8
+		int randperson = (int) (Math.random()*6 + 13); //add 13 because rooms/weapons are 0-14 of deck, removing 2 before, so starting index of weapon is 13
 		String room = deck.remove(randroom).getCardName();
 		String weapon = deck.remove(randweapon).getCardName();
 		String person = deck.remove(randperson).getCardName();
