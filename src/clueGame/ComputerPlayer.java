@@ -23,8 +23,6 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public BoardCell pickLocation (HashSet<BoardCell> targets) {
-		//board.calcTargets(this.row, this.column, rollLength);
-		//Set<BoardCell> targets = board.getTargets();
 		Set<BoardCell> priorityTargets = new HashSet<BoardCell>();
 		for (BoardCell b : targets){
 			if (!(b.getDoorDirection() == DoorDirection.NONE) && !(seenRooms.contains(b.getInitial())) && b.getInitial() != lastRoom && b.getInitial() != 'F'){
@@ -83,7 +81,7 @@ public class ComputerPlayer extends Player {
 	
 	private <T> T randomFromSet(Collection<T> needRand){
 		int size = needRand.size();
-		int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+		int item = new Random().nextInt(size);
 		int i = 0;
 		for(T b : needRand)
 		{

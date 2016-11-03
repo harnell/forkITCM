@@ -371,16 +371,13 @@ public class Board {
 		if (playas.isEmpty()){
 			playas = this.players;
 		}
-		
 		//used to ensure that for loop does not start at playas.size(), which is out of bounds
 		int startPlayerIndex = (currentPlayerIndex+1)%playas.size();
-		for (int i = startPlayerIndex; i != currentPlayerIndex;){			//this for loop is used to simulate a queue
+		for (int i = startPlayerIndex; i != currentPlayerIndex;i = (i+1) % playas.size()){			//this for loop is used to simulate a queue
 			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
 			if (possibleDisproved != null){
 				return possibleDisproved;
 			}
-			i++;
-			i = i % playas.size();
 		}
 		return null;
 	}
