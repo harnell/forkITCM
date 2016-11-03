@@ -17,14 +17,14 @@ public class gameSetupTests {
 	private static Board board;
 	
 	@BeforeClass
-	public static void setup(){
+	public static void setup() {
 		board = Board.getInstance();
-		board.setConfigFiles("BoardLayout.csv", "Legend.txt");		
+		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");		
 		board.initialize();
 	}
 	
 	@Test
-	public void TestPersonDeck(){
+	public void TestPersonDeck() {
 		//personsDeck
 		assertTrue(board.getPersonDeck().get(2).equals(new Card("Cortana", CardType.PERSON)));			//Tests if certain car matches the item in that location in person.txt
 		assertTrue(board.getPersonDeck().size() == 6);													//Tests if size of array correct, should ensure along with above that entire array is correct

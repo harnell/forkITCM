@@ -17,25 +17,25 @@ public class Board {
 	//Size of board
 	private int numRows = 0;
 	private int numColumns = 0;
-	
+
 	//Board
 	private BoardCell[][] board;
 	private Map<Character, String> rooms;
-	
+
 	//Creating adjacent matrix
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
-	
+
 	//Config file names
 	private String boardConfigFile;
 	private String roomConfigFile;
-	private String personConfigFile = "person.txt";
-	private String weaponsConfigFile = "weapons.txt";
-	
+	private String personConfigFile;
+	private String weaponsConfigFile;
+
 	//Solution
 	private Solution theAnswer;
-	
+
 
 
 	//Decks of cards
@@ -43,10 +43,10 @@ public class Board {
 	private ArrayList<Card> personDeck = new ArrayList<Card>();
 	private ArrayList<Card> weaponsDeck = new ArrayList<Card>();
 	private ArrayList<Card> roomDeck = new ArrayList<Card>();
-	
+
 	//Players
 	private ArrayList<Player> players;								
-	
+
 
 
 
@@ -54,7 +54,7 @@ public class Board {
 	private static Board theInstance = new Board();
 	// ctor is static to ensure only one can be created
 	private Board() {}
-	
+
 	public void initialize() {
 		try{
 			loadRoomConfig();
@@ -97,7 +97,7 @@ public class Board {
 		}
 		in.close();
 	}
-	
+
 	/*
 	 * Initializes class level variables and reads in data from board config file
 	 */
@@ -144,7 +144,7 @@ public class Board {
 		}
 		in.close();
 	}
-	
+
 	/*
 	 * Loads in and creates the weapon, player, and room cards
 	 */
@@ -153,7 +153,7 @@ public class Board {
 
 		Scanner personIn = new Scanner(personReader);
 		players = new ArrayList<Player>();
-		
+
 		//This will import all of the person cards
 		for (int i = 0; i < 6; i++){
 			String line = personIn.nextLine();
@@ -174,7 +174,7 @@ public class Board {
 		}
 		personIn.close();
 	}
-	
+
 	/*
 	 * Loads in and creates the weapon cards
 	 */
@@ -182,7 +182,7 @@ public class Board {
 		FileReader weaponsReader = new FileReader(weaponsConfigFile);
 
 		Scanner weaponsIn = new Scanner(weaponsReader);
-		
+
 		//This will import all of the weapons cards
 		for (int i = 0; i < 6; i++){
 			String line = weaponsIn.nextLine();
@@ -198,7 +198,7 @@ public class Board {
 		}
 		weaponsIn.close();
 	}
-	
+
 	/*
 	 * Calulates the adjacencies for a cell that is passed in
 	 */
@@ -266,7 +266,7 @@ public class Board {
 		cellsToAdd.removeAll(cellsToDelete);
 		adjMatrix.put(cell, cellsToAdd);
 	}
-	
+
 	/*
 	 * Calculates the targets that the player can move to 
 	 */
@@ -298,7 +298,7 @@ public class Board {
 		targets.clear();
 		calcTargetsRecursive(cell, pathLength);
 	}
-	
+
 	/*
 	 * Checks if the doorway is in the correct direction for the player to enter it based on the cell location
 	 */
@@ -315,22 +315,22 @@ public class Board {
 			return true;
 		}
 	}
-	
+
 	/*
 	 * Converts colors when inputting person.txt items
 	 */
 	public Color convertColor(String strColor) {
-	    Color color; 
-	    try {     
-	        // We can use reflection to convert the string to a color
-	        Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
-	        color = (Color)field.get(null); 
-	    } catch (Exception e) {  
-	        color = null; // Not defined  
-	    }
-	    return color;
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+			color = (Color)field.get(null); 
+		} catch (Exception e) {  
+			color = null; // Not defined  
+		}
+		return color;
 	}
-	
+
 	/*
 	 * Creates the solution to the game
 	 */
@@ -343,7 +343,7 @@ public class Board {
 		String person = deck.remove(randperson).getCardName();
 		theAnswer = new Solution(person, room, weapon);
 	}
-	
+
 	/*
 	 * Deals the deck<> to players
 	 */
@@ -361,11 +361,11 @@ public class Board {
 			p.setMyCards(cards);
 		}
 	}
-	
+
 	public boolean checkAccusation(Solution accusation){
 		return theAnswer.equals(accusation);
 	}
-	
+
 	public Card handleSuggestion(Solution suggestion, ArrayList<Player> playas, int currentPlayerIndex){
 		//failsafe if passed in empty players arraylist, meant for testing purposes
 		if (playas.isEmpty()){
@@ -386,14 +386,14 @@ public class Board {
 	 * and
 	 * Setters
 	 */
-	
+
 	/*
 	 * this method returns the only Board
 	 */
 	public static Board getInstance() {
 		return theInstance;
 	}
-	
+
 	/*
 	 * Returns adjacencey list
 	 */
@@ -419,19 +419,28 @@ public class Board {
 
 	/*
 	 * Sets file names for for the configuration files
+	 * Functions is overloaded for previous test that did not use person and weapon files
+	 * Final game should only use the 4 parameters version
 	 */
-	public void setConfigFiles(String string, String string2) {
-		roomConfigFile = string2;
-		boardConfigFile = string;		
+	public void setConfigFiles(String boardFile, String roomFile, String personFile, String weaponFile) {
+		boardConfigFile = boardFile;
+		roomConfigFile = roomFile;
+		personConfigFile = personFile;
+		weaponsConfigFile = weaponFile;
 	}
 	
+	public void setConfigFiles(String boardFile, String roomFile) {
+		boardConfigFile = boardFile;
+		roomConfigFile = roomFile;
+	}
+
 	/*
 	 * Returns the legend read in from config file
 	 */
 	public Map<Character, String> getLegend() {
 		return rooms;
 	}
-	
+
 	/*
 	 * Returns the number of rows on the board
 	 */
@@ -444,14 +453,14 @@ public class Board {
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	/*
 	 * Returns the cell at row, column location
 	 */
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
-	
+
 	/*
 	 * Returns the targets the the player can move to
 	 */
@@ -462,19 +471,19 @@ public class Board {
 	public ArrayList<Card> getPersonDeck() {
 		return personDeck;
 	}
-	
+
 	public ArrayList<Card> getWeaponsDeck() {
 		return weaponsDeck;
 	}
-	
+
 	public ArrayList<Card> getRoomDeck() {
 		return roomDeck;
 	}
-	
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-	
+
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
@@ -482,8 +491,8 @@ public class Board {
 		return theAnswer;
 	}
 
-	
-	
-	
-	
+
+
+
+
 }

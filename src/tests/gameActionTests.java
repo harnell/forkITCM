@@ -20,7 +20,7 @@ private static Board board;
 	@BeforeClass
 	public static void setup(){
 		board = Board.getInstance();
-		board.setConfigFiles("BoardLayout.csv", "Legend.txt");		
+		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");		
 		board.initialize();
 	}
 	
