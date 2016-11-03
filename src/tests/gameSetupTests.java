@@ -26,7 +26,6 @@ public class gameSetupTests {
 	@Test
 	public void TestPersonDeck(){
 		//personsDeck
-		//System.out.println(board.getPersonDeck().get(2).toString());
 		assertTrue(board.getPersonDeck().get(2).equals(new Card("Cortana", CardType.PERSON)));			//Tests if certain car matches the item in that location in person.txt
 		assertTrue(board.getPersonDeck().size() == 6);													//Tests if size of array correct, should ensure along with above that entire array is correct
 		for (int i = 0; i < 6; i++){
@@ -54,17 +53,17 @@ public class gameSetupTests {
 	@Test
 	public void TestWholeDeck(){
 		//deck
-		assertTrue(board.getDeck().get(7).equals(new Card("Easter Isle", CardType.ROOM)));
-		assertTrue(board.getDeck().get(12).equals(new Card("Gravity Hammer", CardType.WEAPON)));
-		assertTrue(board.getDeck().get(17).equals(new Card("Cortana", CardType.PERSON)));
-		assertTrue(board.getDeck().size() == 21);
-		for (int i = 0; i < 9; i++){
+		assertTrue(board.getDeck().get(7).equals(new Card("Easter Isle", CardType.ROOM)) || board.getDeck().get(7).equals(new Card("Locker Room", CardType.ROOM)));
+		assertTrue(board.getDeck().get(12).equals(new Card("Brute Shot", CardType.WEAPON)) || board.getDeck().get(12).equals(new Card("Plasma Grenade", CardType.WEAPON)));
+		assertTrue(board.getDeck().get(17).equals(new Card("Sargent Johnson", CardType.PERSON)) || board.getDeck().get(17).equals(new Card("Gravemind", CardType.PERSON)));
+		assertTrue(board.getDeck().size() == 18);
+		for (int i = 0; i < 8; i++){
 			assertEquals(CardType.ROOM, board.getDeck().get(i).getType());
 		}
-		for (int i = 9; i < 15; i++){
+		for (int i = 8; i < 13; i++){
 			assertEquals(CardType.WEAPON, board.getDeck().get(i).getType());
 		}
-		for (int i = 15; i < 21; i++){
+		for (int i = 13; i < 18; i++){
 			assertEquals(CardType.PERSON, board.getDeck().get(i).getType());
 		}
 	}
@@ -94,7 +93,6 @@ public class gameSetupTests {
 	
 	@Test
 	public void TestPlayersDealtHands(){
-		board.makeSolution();
 		board.dealCards();
 		ArrayList<Card> hasBeenDealt = new ArrayList<Card>();
 		ArrayList<Player> tempPlayers = board.getPlayers();
