@@ -10,7 +10,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueGame.Board;
+
 public class GUI_display extends JPanel{
+	private static GUI_notes dnotes;
+	private static Board board = Board.getInstance();
 
 	public GUI_display (){
 		setLayout(new GridLayout(2,3));
@@ -67,6 +71,13 @@ public class GUI_display extends JPanel{
 		GUI_display gui = new GUI_display();
 		frame.add(gui);
 		frame.setVisible(true);
+		
+		// Setting up game
+		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
+		board.initialize();
+		
+		dnotes = new GUI_notes();
+		dnotes.setVisible(true);
 	}
 
 }
