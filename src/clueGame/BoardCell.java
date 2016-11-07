@@ -98,24 +98,26 @@ public class BoardCell {
 	
 	public void draw(Graphics g){
 		if (this.isRoom()){
-			g.setColor(roomColor);
-			g.fillRect(x, y, rectWidth, rectHeight);
-			if (this.isDoorway()){
-				g.setColor(doorColor);
-				g.fillRect(doorX, doorY, doorWidth, doorHeight);
-			}
+			drawRect(g, x, y, rectWidth, rectHeight, true, roomColor);
+			if (this.isDoorway())
+				drawRect(g, doorX, doorY, doorWidth, doorHeight, true, doorColor);
 			if (this.drawRoomName){
 				g.setColor(doorColor);
 				g.drawString(Board.getInstance().getLegend().get(this.initial), x, y);
 			}
 		}
 		else{
-			g.setColor(walkFillColor);
-			g.fillRect(x, y, rectWidth, rectHeight);
-			g.setColor(walkBorderColor);
-			g.drawRect(x, y, rectWidth, rectHeight);
+			drawRect(g, x, y, rectWidth, rectHeight, true, walkFillColor);
+			drawRect(g, x, y, rectWidth, rectHeight, false, walkBorderColor);
 		}
-		
+	}
+	
+	private void drawRect(Graphics g, int xCoord, int yCoord, int width, int height, boolean isFill, Color color){
+		g.setColor(color);
+		if (isFill)
+			g.fillRect(xCoord, yCoord, width, height);
+		else
+			g.drawRect(xCoord, yCoord, width, height);
 	}
 
 }
