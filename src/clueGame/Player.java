@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,6 +82,13 @@ public abstract class Player implements Comparable<Object>{
 	}
 	public void setSeenCards(Set<Card> seenCards) {
 		this.seenCards = seenCards;
+	}
+	
+	public void draw(Graphics g){
+		g.setColor(color);
+		g.fillOval(column, row, 29, 29);
+		g.setColor(Color.BLACK);
+		g.drawOval(column, row, 29, 29);
 	}
 
 
