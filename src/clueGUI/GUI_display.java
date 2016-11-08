@@ -13,8 +13,6 @@ import javax.swing.border.TitledBorder;
 import clueGame.Board;
 
 public class GUI_display extends JPanel{
-	private static GUI_notes dnotes;
-	private static Board board = Board.getInstance();
 
 	public GUI_display (){
 		setLayout(new GridLayout(2,3));
@@ -59,25 +57,7 @@ public class GUI_display extends JPanel{
 		panel6.add(guessResult);
 		JTextField resultOutput = new JTextField(20);
 		panel6.add(resultOutput);
-		add(panel6);
-		
-		
-	}
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(900, 300);
-		GUI_display gui = new GUI_display();
-		frame.add(gui);
-		frame.setVisible(true);
-		
-		// Setting up game
-		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
-		board.initialize();
-		
-		dnotes = new GUI_notes();
-		dnotes.setVisible(true);
+		add(panel6);	
 	}
 
 }

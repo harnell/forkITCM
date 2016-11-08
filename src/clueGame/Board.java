@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Field;
@@ -11,7 +12,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Board {
+import javax.swing.JPanel;
+
+public class Board extends JPanel {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
 	//Size of board
@@ -489,6 +492,16 @@ public class Board {
 	}
 	public Solution getTheAnswer() {
 		return theAnswer;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				board[i][j].draw(g);
+			}
+		}
 	}
 
 
