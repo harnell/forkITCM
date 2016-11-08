@@ -19,7 +19,7 @@ public class ClueGame extends JFrame{
 
 	public ClueGame() {
 		setTitle("Clue");
-		setSize(650,725);
+		setSize(647,722);
 		add(board, BorderLayout.CENTER);
 		createMenu();
 	}
