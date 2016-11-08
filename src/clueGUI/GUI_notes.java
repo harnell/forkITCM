@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import clueGame.Board;
 import clueGame.Card;
 
+@SuppressWarnings("serial")
 public class GUI_notes extends JDialog{
 	
 	private JPanel buttons = new JPanel();

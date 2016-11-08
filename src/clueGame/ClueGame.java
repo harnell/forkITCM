@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import clueGUI.GUI_display;
 import clueGUI.GUI_notes;
 
+@SuppressWarnings("serial")
 public class ClueGame extends JFrame{
 
 	private static Board board = Board.getInstance();

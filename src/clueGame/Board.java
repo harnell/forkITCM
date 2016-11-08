@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
