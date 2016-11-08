@@ -502,6 +502,9 @@ public class Board extends JPanel {
 				board[i][j].draw(g);
 			}
 		}
+		for (Player p: players) {
+			p.draw(g);
+		}
 	}
 
 

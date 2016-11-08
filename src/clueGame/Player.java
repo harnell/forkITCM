@@ -13,10 +13,6 @@ public abstract class Player implements Comparable<Object>{
 	 private Color color;
 	 protected Set<Card> myCards;
 	 protected Set<Card> seenCards;
-	 
-
-
-
 
 	public Set<Card> getMyCards() {
 		return myCards;
@@ -86,9 +82,9 @@ public abstract class Player implements Comparable<Object>{
 	
 	public void draw(Graphics g){
 		g.setColor(color);
-		g.fillOval(column, row, 29, 29);
+		g.fillOval(column * 30, row * 30, 29, 29);
 		g.setColor(Color.BLACK);
-		g.drawOval(column, row, 29, 29);
+		g.drawOval(column * 30, row * 30, 29, 29);
 	}
 
 

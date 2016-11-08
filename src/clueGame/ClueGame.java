@@ -13,41 +13,35 @@ import clueGUI.GUI_display;
 import clueGUI.GUI_notes;
 
 public class ClueGame extends JFrame{
-	
+
 	private static Board board = Board.getInstance();
-	private static GUI_notes dnotes;
-	
+	private GUI_notes dnotes = new GUI_notes();
+
 	public ClueGame() {
 		setTitle("Clue");
-		setSize(1000,1000);
+		setSize(650,725);
 		add(board, BorderLayout.CENTER);
-		
 		createMenu();
 	}
-	
+
 	private JMenuItem createDnotes() {
 		JMenuItem notes = new JMenuItem("Detective Notes");
 		class DnotesListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (notes.isSelected()) {
-					dnotes = new GUI_notes();
-					dnotes.setVisible(true);
-				}
+				dnotes.setVisible(true);
 			}
 		}
 		notes.addActionListener(new DnotesListener());
 		return notes;
 	}
-	
+
 	private JMenuItem createExit() {
 		JMenuItem exit = new JMenuItem("Exit");
 		class ExitListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (exit.isSelected()) {
-					System.exit(0);
-				}
+				System.exit(0);
 			}
 		}
 		exit.addActionListener(new ExitListener());
@@ -57,7 +51,7 @@ public class ClueGame extends JFrame{
 	private void createMenu() {
 		JMenuBar bar = new JMenuBar();
 		setJMenuBar(bar);
-		
+
 		JMenu menu = new JMenu("File");
 		menu.add(createDnotes());
 		menu.add(createExit());
@@ -71,11 +65,11 @@ public class ClueGame extends JFrame{
 		GUI_display gui = new GUI_display();
 		frame.add(gui);
 		frame.setVisible(true);
-		
+
 		// Setting up game
 		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
 		board.initialize();
-		
+
 		ClueGame clueGame = new ClueGame();
 		clueGame.setVisible(true);
 		clueGame.repaint();

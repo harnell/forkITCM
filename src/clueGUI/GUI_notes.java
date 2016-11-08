@@ -75,7 +75,7 @@ public class GUI_notes extends JDialog{
 	}
 	
 	public GUI_notes() {
-		setSize(300,800);
+		setSize(300,900);
 		setLayout(new GridLayout(1,2));
 		setTitle("Detective Notes");
 		CheckList();
