@@ -27,7 +27,7 @@ public class ClueGame extends JFrame{
 
 	public ClueGame() {
 		setTitle("Clue");
-		setSize(647,722);
+		setSize(975,900);
 		add(board, BorderLayout.CENTER);
 		createMenu();
 	}
@@ -66,9 +66,8 @@ public class ClueGame extends JFrame{
 		bar.add(menu);
 	}
 	
-	private void createCardPanel() {
-		JFrame tframe = new JFrame();
-		tframe.setSize(200, 300);
+	private JPanel createCardPanel() {
+		JPanel tframe = new JPanel();
 		JPanel tpanel = new JPanel();
 		tpanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 		tpanel.setLayout(new GridLayout(3,1));
@@ -100,16 +99,15 @@ public class ClueGame extends JFrame{
 		tpanel.add(rpanel);
 		tpanel.add(wpanel);
 		tframe.add(tpanel);
-		tframe.setVisible(true);
+		return tframe;
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(900, 200);
+		JPanel frame = new JPanel();
 		GUI_display gui = new GUI_display();
 		frame.add(gui, BorderLayout.CENTER);
-		frame.setVisible(true);
+		frame.setBorder(new TitledBorder(new EtchedBorder(), "Control Panel"));
+
 
 		// Setting up game
 		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
@@ -117,11 +115,15 @@ public class ClueGame extends JFrame{
 		board.dealCards();
 		
 		ClueGame clueGame = new ClueGame();
+		JPanel cardFrame = clueGame.createCardPanel();
+
+		
+		clueGame.add(cardFrame, BorderLayout.EAST);
+		clueGame.add(frame, BorderLayout.SOUTH);
 		clueGame.setVisible(true);
 		clueGame.repaint();
-		clueGame.createCardPanel();
-		
-		JOptionPane.showMessageDialog(frame, "You are Master Chief, press Next Player to begin playing", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(clueGame, "You are Master Chief, press Next Player to begin playing", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+
 		
 	}
 
