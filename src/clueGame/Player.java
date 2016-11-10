@@ -13,6 +13,7 @@ public abstract class Player implements Comparable<Object>{
 	 private Color color;
 	 protected Set<Card> myCards;
 	 protected Set<Card> seenCards;
+	 public boolean mustMove = true;
 
 	public Set<Card> getMyCards() {
 		return myCards;

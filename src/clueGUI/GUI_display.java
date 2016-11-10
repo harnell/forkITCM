@@ -1,6 +1,8 @@
 package clueGUI;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,9 +11,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueGame.Board;
+import clueGame.ClueGame;
+
+
 @SuppressWarnings("serial")
 public class GUI_display extends JPanel{
 
+	private Board board = Board.getInstance();
 	public GUI_display (){
 		setLayout(new GridLayout(2,3));
 		//First panel
@@ -24,6 +31,13 @@ public class GUI_display extends JPanel{
 		
 		//Second panel
 		JButton nextPlayer = new JButton("Next Player");
+		class NextListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClueGame.theInstance.nextPlayer();
+			}
+		}
+		nextPlayer.addActionListener(new NextListener());
 		add(nextPlayer);
 		
 		//Third panel

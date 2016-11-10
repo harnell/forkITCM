@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -40,8 +41,6 @@ public class Board extends JPanel {
 	//Solution
 	private Solution theAnswer;
 
-
-
 	//Decks of cards
 	private ArrayList<Card> deck = new ArrayList<Card>(21);
 	private ArrayList<Card> personDeck = new ArrayList<Card>();
@@ -50,9 +49,6 @@ public class Board extends JPanel {
 
 	//Players
 	private ArrayList<Player> players;								
-
-
-
 
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -507,9 +503,5 @@ public class Board extends JPanel {
 			p.draw(g);
 		}
 	}
-
-
-
-
 
 }

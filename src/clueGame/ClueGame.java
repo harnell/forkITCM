@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,6 +25,9 @@ public class ClueGame extends JFrame{
 
 	private static Board board = Board.getInstance();
 	private GUI_notes dnotes = new GUI_notes();
+	private int playerIndex = 0;
+	
+	public static ClueGame theInstance = new ClueGame();
 
 	public ClueGame() {
 		setTitle("Clue");
@@ -101,6 +105,35 @@ public class ClueGame extends JFrame{
 		tframe.add(tpanel);
 		return tframe;
 	}
+	
+	
+	public void nextPlayer() {
+//		if (players.get(playerIndex % players.size()).getClass() == HumanPlayer.class) {
+//			if (((HumanPlayer) players.get(playerIndex % players.size())).moved) {
+//				if (((HumanPlayer) players.get(playerIndex % players.size())).)
+//				playerIndex++;
+//				return;
+//			}
+//			else {
+//				
+//			}
+//			
+//		}
+//		else {
+//			System.out.println("Computer");
+//			playerIndex++;
+//		}
+		
+		ArrayList<Player> players = board.getPlayers();
+		if (players.get(playerIndex % players.size()).mustMove) {
+			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);
+
+		}
+		else {
+			
+			ClueGame.theInstance.repaint();
+		}
+	}
 
 	public static void main(String[] args) {
 		JPanel frame = new JPanel();
@@ -117,14 +150,12 @@ public class ClueGame extends JFrame{
 		ClueGame clueGame = new ClueGame();
 		JPanel cardFrame = clueGame.createCardPanel();
 
-		
 		clueGame.add(cardFrame, BorderLayout.EAST);
 		clueGame.add(frame, BorderLayout.SOUTH);
 		clueGame.setVisible(true);
 		clueGame.repaint();
 		JOptionPane.showMessageDialog(clueGame, "You are Master Chief, press Next Player to begin playing", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
-		
 	}
 
 }
