@@ -73,11 +73,32 @@ public class ClueGame extends JFrame{
 		tpanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 		tpanel.setLayout(new GridLayout(3,1));
 		
+		JPanel ppanel = new JPanel();
+		JPanel rpanel = new JPanel();
+		JPanel wpanel = new JPanel();
+		ppanel.setBorder(new TitledBorder(new EtchedBorder(), "Person Card(s)"));
+		rpanel.setBorder(new TitledBorder(new EtchedBorder(), "Room Card(s)"));
+		wpanel.setBorder(new TitledBorder(new EtchedBorder(), "Weapon Card(s)"));
+		ppanel.setLayout(new GridLayout(0,1));
+		rpanel.setLayout(new GridLayout(0,1));
+		wpanel.setLayout(new GridLayout(0,1));
+		
 		for (Card c: board.getPlayers().get(0).getMyCards()) {
 			JTextField text = new JTextField(20);
 			text.setText(c.getCardName());
-			tpanel.add(text);
+			if (c.getType() == CardType.PERSON) {
+				ppanel.add(text);
+			}
+			else if (c.getType() == CardType.ROOM) {
+				rpanel.add(text);
+			}
+			else {
+				wpanel.add(text);
+			}
 		}
+		tpanel.add(ppanel);
+		tpanel.add(rpanel);
+		tpanel.add(wpanel);
 		tframe.add(tpanel);
 		tframe.setVisible(true);
 	}
@@ -85,7 +106,7 @@ public class ClueGame extends JFrame{
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(900, 300);
+		frame.setSize(900, 200);
 		GUI_display gui = new GUI_display();
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);
