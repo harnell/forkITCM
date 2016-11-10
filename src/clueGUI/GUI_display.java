@@ -55,7 +55,7 @@ public class GUI_display extends JPanel{
 		panel6.add(guessResult);
 		JTextField resultOutput = new JTextField(20);
 		panel6.add(resultOutput);
-		add(panel6);	
+		add(panel6);
 	}
 
 }
