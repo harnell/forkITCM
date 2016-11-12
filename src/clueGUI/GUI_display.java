@@ -19,10 +19,24 @@ import clueGame.ClueGame;
 public class GUI_display extends JPanel{
 
 	private Board board = Board.getInstance();
+	
+	private JPanel panel1 = new JPanel();
+	
+	private JButton nextPlayer = new JButton("Next Player");
+	private JButton makeAccusation = new JButton("Make an Accusation");
+	
+	private JPanel panel4 = new JPanel();
+	private JTextField rollNumber = new JTextField(4);
+	
+	private JPanel panel5 = new JPanel();
+	private JTextField guessInput = new JTextField(20);
+	
+	private JPanel panel6 = new JPanel();
+	private JTextField resultOutput = new JTextField(20);
+	
 	public GUI_display (){
 		setLayout(new GridLayout(2,3));
 		//First panel
-		JPanel panel1 = new JPanel();
 		JLabel whoseTurn = new JLabel("Whose turn?");
 		panel1.add(whoseTurn);
 		JTextField playerTurn = new JTextField(20);
@@ -30,7 +44,6 @@ public class GUI_display extends JPanel{
 		add(panel1);
 		
 		//Second panel
-		JButton nextPlayer = new JButton("Next Player");
 		class NextListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -41,35 +54,33 @@ public class GUI_display extends JPanel{
 		add(nextPlayer);
 		
 		//Third panel
-		JButton makeAccusation = new JButton("Make an Accusation");
 		add(makeAccusation);
 		
 		//Fourth panel
-		JPanel panel4 = new JPanel();
 		panel4.setBorder(new TitledBorder(new EtchedBorder(), "Die"));
 		JLabel dieRoll = new JLabel("Roll");
 		panel4.add(dieRoll);
-		JTextField rollNumber = new JTextField(4);
 		panel4.add(rollNumber);
 		add(panel4);
 		
 		//Fifth panel
-		JPanel panel5 = new JPanel();
 		panel5.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 		JLabel playerGuess = new JLabel("Guess");
 		panel5.add(playerGuess);
-		JTextField guessInput = new JTextField(20);
 		panel5.add(guessInput);
 		add(panel5);
 		
 		//Sixth panel
-		JPanel panel6 = new JPanel();
 		panel6.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		JLabel guessResult = new JLabel("Response");
 		panel6.add(guessResult);
-		JTextField resultOutput = new JTextField(20);
 		panel6.add(resultOutput);
 		add(panel6);
+	}
+	
+	public void setDice(int x) {
+		rollNumber.setText(Integer.toString(x));
+		revalidate();
 	}
 
 }

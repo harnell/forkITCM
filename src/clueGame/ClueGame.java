@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -28,6 +30,8 @@ public class ClueGame extends JFrame{
 	private int playerIndex = 0;
 	
 	public static ClueGame theInstance = new ClueGame();
+	public static JPanel frame = new JPanel();
+	public static GUI_display gui = new GUI_display();
 
 	public ClueGame() {
 		setTitle("Clue");
@@ -125,19 +129,32 @@ public class ClueGame extends JFrame{
 //		}
 		
 		ArrayList<Player> players = board.getPlayers();
-		if (players.get(playerIndex % players.size()).mustMove) {
+		// Skipping human player for testing purposes
+		Player i = players.get(playerIndex % players.size());
+		if (i.mustMove) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);
-
 		}
 		else {
-			
-			ClueGame.theInstance.repaint();
+			playerIndex++;
+			int roll = rollDice();
+			board.calcTargets(i.getRow(), i.getColumn(), roll);
+			BoardCell bc = i.pickLocation((HashSet<BoardCell>) board.getTargets());
+			i.makeMove(bc);
+			System.out.println(bc.getRow() + " " + bc.getCol());
+			revalidate();
+			repaint();
 		}
+	}
+	
+	public int rollDice() {
+		Random r = new Random();
+		int x = r.nextInt(6) + 1;
+		System.out.println(x);
+		gui.setDice(x);
+		return x;
 	}
 
 	public static void main(String[] args) {
-		JPanel frame = new JPanel();
-		GUI_display gui = new GUI_display();
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setBorder(new TitledBorder(new EtchedBorder(), "Control Panel"));
 
@@ -152,6 +169,7 @@ public class ClueGame extends JFrame{
 
 		clueGame.add(cardFrame, BorderLayout.EAST);
 		clueGame.add(frame, BorderLayout.SOUTH);
+		clueGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		clueGame.setVisible(true);
 		clueGame.repaint();
 		JOptionPane.showMessageDialog(clueGame, "You are Master Chief, press Next Player to begin playing", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
