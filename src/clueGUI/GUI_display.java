@@ -21,6 +21,7 @@ public class GUI_display extends JPanel{
 	private Board board = Board.getInstance();
 	
 	private JPanel panel1 = new JPanel();
+	JTextField playerTurn = new JTextField(20);
 	
 	public JButton nextPlayer = new JButton("Next Player");
 	private JButton makeAccusation = new JButton("Make an Accusation");
@@ -39,7 +40,6 @@ public class GUI_display extends JPanel{
 		//First panel
 		JLabel whoseTurn = new JLabel("Whose turn?");
 		panel1.add(whoseTurn);
-		JTextField playerTurn = new JTextField(20);
 		panel1.add(playerTurn);
 		add(panel1);
 		
@@ -80,6 +80,11 @@ public class GUI_display extends JPanel{
 	
 	public void setDice(int x) {
 		rollNumber.setText(Integer.toString(x));
+		ClueGame.theInstance.revalidate();
+	}
+	
+	public void setWhoseTurn(String s) {
+		playerTurn.setText(s);
 		ClueGame.theInstance.revalidate();
 	}
 

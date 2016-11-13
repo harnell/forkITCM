@@ -139,6 +139,7 @@ public class ClueGame extends JFrame{
 		else {
 			playerIndex++;
 			int roll = rollDice();
+			gui.setWhoseTurn(i.getPlayerName());
 			board.calcTargets(i.getRow(), i.getColumn(), roll);
 			BoardCell bc = i.pickLocation((HashSet<BoardCell>) board.getTargets());
 			i.makeMove(bc);
