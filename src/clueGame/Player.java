@@ -14,6 +14,8 @@ public abstract class Player implements Comparable<Object>{
 	 protected Set<Card> myCards;
 	 protected Set<Card> seenCards;
 	 
+	 Board board = Board.getInstance();
+	 
 	 public boolean mustMove = false;
 
 	public Set<Card> getMyCards() {
@@ -37,9 +39,6 @@ public abstract class Player implements Comparable<Object>{
 		this.color = color;
 		seenCards = new HashSet<Card>();
 	}
-
-
-	 
 
 	public String getPlayerName() {
 		return playerName;
@@ -100,5 +99,7 @@ public abstract class Player implements Comparable<Object>{
 	public void makeMove(BoardCell bc) {
 		row = bc.getRow();
 		column = bc.getCol();
+		board.validate();
+		board.repaint();
 	}
 }

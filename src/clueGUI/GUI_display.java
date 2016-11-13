@@ -22,7 +22,7 @@ public class GUI_display extends JPanel{
 	
 	private JPanel panel1 = new JPanel();
 	
-	private JButton nextPlayer = new JButton("Next Player");
+	public JButton nextPlayer = new JButton("Next Player");
 	private JButton makeAccusation = new JButton("Make an Accusation");
 	
 	private JPanel panel4 = new JPanel();
@@ -80,7 +80,7 @@ public class GUI_display extends JPanel{
 	
 	public void setDice(int x) {
 		rollNumber.setText(Integer.toString(x));
-		revalidate();
+		ClueGame.theInstance.revalidate();
 	}
 
 }

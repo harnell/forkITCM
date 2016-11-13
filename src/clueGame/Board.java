@@ -287,6 +287,7 @@ public class Board extends JPanel {
 				visited.remove(adjCell);
 			}
 		}
+		visited.remove(cell);
 	}
 
 	/*

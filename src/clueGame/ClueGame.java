@@ -30,7 +30,6 @@ public class ClueGame extends JFrame{
 	private int playerIndex = 0;
 	
 	public static ClueGame theInstance = new ClueGame();
-	public static JPanel frame = new JPanel();
 	public static GUI_display gui = new GUI_display();
 
 	public ClueGame() {
@@ -129,7 +128,10 @@ public class ClueGame extends JFrame{
 //		}
 		
 		ArrayList<Player> players = board.getPlayers();
+		
 		// Skipping human player for testing purposes
+		if (playerIndex % players.size() == 0) playerIndex++;
+		
 		Player i = players.get(playerIndex % players.size());
 		if (i.mustMove) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);
@@ -140,37 +142,33 @@ public class ClueGame extends JFrame{
 			board.calcTargets(i.getRow(), i.getColumn(), roll);
 			BoardCell bc = i.pickLocation((HashSet<BoardCell>) board.getTargets());
 			i.makeMove(bc);
-			System.out.println(bc.getRow() + " " + bc.getCol());
-			revalidate();
-			repaint();
 		}
 	}
 	
 	public int rollDice() {
 		Random r = new Random();
 		int x = r.nextInt(6) + 1;
-		System.out.println(x);
 		gui.setDice(x);
 		return x;
 	}
 
 	public static void main(String[] args) {
-		frame.add(gui, BorderLayout.CENTER);
-		frame.setBorder(new TitledBorder(new EtchedBorder(), "Control Panel"));
-
-
 		// Setting up game
 		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
 		board.initialize();
 		board.dealCards();
 		
 		ClueGame clueGame = new ClueGame();
-		JPanel cardFrame = clueGame.createCardPanel();
+		JPanel cardPanel = clueGame.createCardPanel();
+		JPanel controlPanel = new JPanel();
+		controlPanel.add(gui, BorderLayout.CENTER);
+		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Control Panel"));
 
-		clueGame.add(cardFrame, BorderLayout.EAST);
-		clueGame.add(frame, BorderLayout.SOUTH);
+		clueGame.add(cardPanel, BorderLayout.EAST);
+		clueGame.add(controlPanel, BorderLayout.SOUTH);
 		clueGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		clueGame.setVisible(true);
+		clueGame.revalidate();
 		clueGame.repaint();
 		JOptionPane.showMessageDialog(clueGame, "You are Master Chief, press Next Player to begin playing", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
