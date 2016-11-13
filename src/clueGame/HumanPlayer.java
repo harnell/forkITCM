@@ -15,18 +15,6 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public BoardCell pickLocation(HashSet<BoardCell> targets) {
-		System.out.println(targets.size());
-		return board.getCellAt(row, column);
-	}
-
-	@Override
-	public void setLastRoom(char lastRoom) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public boolean makeAccusation() {
 		// TODO Auto-generated method stub
 		return false;

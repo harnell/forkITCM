@@ -21,7 +21,6 @@ public class ComputerPlayer extends Player {
 		super(playerName, row, column, color);
 	}
 	
-	@Override
 	public BoardCell pickLocation (HashSet<BoardCell> targets) {
 		Set<BoardCell> priorityTargets = new HashSet<BoardCell>();
 		for (BoardCell b : targets){
@@ -101,8 +100,6 @@ public class ComputerPlayer extends Player {
 		board.repaint();
 	}
 
-	
-	@Override
 	public void setLastRoom(char lastRoom) {
 		this.lastRoom = lastRoom;
 	}

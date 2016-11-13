@@ -20,14 +20,10 @@ public abstract class Player implements Comparable<Object>{
 		return myCards;
 	}
 
-
-
 	public void setMyCards(Set<Card> myCards) {
 		this.myCards = myCards;
 		seenCards = myCards;
 	}
-
-
 
 	public Player(String playerName, int row, int column, Color color) {
 		super();
@@ -88,8 +84,6 @@ public abstract class Player implements Comparable<Object>{
 
 
 	public abstract boolean makeAccusation();
-	public abstract BoardCell pickLocation(HashSet<BoardCell> targets);
-	public abstract void setLastRoom(char lastRoom);
 	public abstract Solution createSuggestion();
 	public abstract void makeMove();
 }
