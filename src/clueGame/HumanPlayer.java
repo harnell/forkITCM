@@ -1,9 +1,11 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 
 public class HumanPlayer extends Player {
+	private Graphics g = board.getGraphics();
 
 	public HumanPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
@@ -12,9 +14,10 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public BoardCell pickLocation(HashSet<BoardCell> targets) {
-		return null;
-		// TODO Auto-generated method stub
-		
+		board.highlight = true;
+		board.validate();
+		board.repaint();
+		return board.getCellAt(row, column);
 	}
 
 	@Override

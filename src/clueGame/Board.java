@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
+	public boolean highlight = false;
 	//Size of board
 	private int numRows = 0;
 	private int numColumns = 0;
@@ -502,6 +503,14 @@ public class Board extends JPanel {
 		}
 		for (Player p: players) {
 			p.draw(g);
+		}
+		if (highlight) {
+			for (BoardCell c: targets) {
+				g.setColor(Color.MAGENTA);
+				g.fillRect(c.getCol() * 30, c.getRow() * 30, 30, 30);
+				g.setColor(Color.black);
+				g.drawRect(c.getCol() * 30, c.getRow() * 30, 30, 30);
+			}
 		}
 	}
 

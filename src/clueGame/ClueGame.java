@@ -111,27 +111,7 @@ public class ClueGame extends JFrame{
 	
 	
 	public void nextPlayer() {
-//		if (players.get(playerIndex % players.size()).getClass() == HumanPlayer.class) {
-//			if (((HumanPlayer) players.get(playerIndex % players.size())).moved) {
-//				if (((HumanPlayer) players.get(playerIndex % players.size())).)
-//				playerIndex++;
-//				return;
-//			}
-//			else {
-//				
-//			}
-//			
-//		}
-//		else {
-//			System.out.println("Computer");
-//			playerIndex++;
-//		}
-		
 		ArrayList<Player> players = board.getPlayers();
-		
-		// Skipping human player for testing purposes
-		if (playerIndex % players.size() == 0) playerIndex++;
-		
 		Player i = players.get(playerIndex % players.size());
 		if (i.mustMove) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);

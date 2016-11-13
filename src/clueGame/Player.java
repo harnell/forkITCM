@@ -94,8 +94,6 @@ public abstract class Player implements Comparable<Object>{
 	public abstract void setLastRoom(char lastRoom);
 	public abstract Solution createSuggestion();
 
-
-
 	public void makeMove(BoardCell bc) {
 		row = bc.getRow();
 		column = bc.getCol();
