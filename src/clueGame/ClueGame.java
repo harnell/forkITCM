@@ -3,8 +3,11 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -28,13 +31,32 @@ public class ClueGame extends JFrame{
 	private static Board board = Board.getInstance();
 	private GUI_notes dnotes = new GUI_notes();
 	private int playerIndex = 0;
-	
+
 	public static ClueGame theInstance = new ClueGame();
 	public static GUI_display gui = new GUI_display();
 
 	public ClueGame() {
 		setTitle("Clue");
 		setSize(975,900);
+		class pickLocationListener implements MouseListener {
+			public void mousePressed (MouseEvent event) {}
+			public void mouseReleased (MouseEvent event) {}
+			public void mouseEntered (MouseEvent event) {}
+			public void mouseExited (MouseEvent event) {}
+			public void mouseClicked (MouseEvent event) {
+				if (playerIndex % 6 == 0) {
+					Point spot = event.getPoint();
+					BoardCell moveHere = board.getCellAt(spot.y / 30, spot.x / 30);
+					if (board.getTargets().contains(moveHere)) {
+						((HumanPlayer) board.getPlayers().get(playerIndex)).finishTurn(moveHere);
+					}
+					else {
+						JOptionPane.showMessageDialog(ClueGame.theInstance, "Invalid square!", "Doh!", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		}
+		board.addMouseListener(new pickLocationListener());
 		add(board, BorderLayout.CENTER);
 		createMenu();
 	}
@@ -72,13 +94,13 @@ public class ClueGame extends JFrame{
 		menu.add(createExit());
 		bar.add(menu);
 	}
-	
+
 	private JPanel createCardPanel() {
 		JPanel tframe = new JPanel();
 		JPanel tpanel = new JPanel();
 		tpanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 		tpanel.setLayout(new GridLayout(3,1));
-		
+
 		JPanel ppanel = new JPanel();
 		JPanel rpanel = new JPanel();
 		JPanel wpanel = new JPanel();
@@ -88,7 +110,7 @@ public class ClueGame extends JFrame{
 		ppanel.setLayout(new GridLayout(0,1));
 		rpanel.setLayout(new GridLayout(0,1));
 		wpanel.setLayout(new GridLayout(0,1));
-		
+
 		for (Card c: board.getPlayers().get(0).getMyCards()) {
 			JTextField text = new JTextField(20);
 			text.setText(c.getCardName());
@@ -108,12 +130,12 @@ public class ClueGame extends JFrame{
 		tframe.add(tpanel);
 		return tframe;
 	}
-	
-	
+
+
 	public void nextPlayer() {
 		ArrayList<Player> players = board.getPlayers();
 		Player i = players.get(playerIndex % players.size());
-		if (i.mustMove) {
+		if (board.mustFinish) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
@@ -121,11 +143,11 @@ public class ClueGame extends JFrame{
 			int roll = rollDice();
 			gui.setWhoseTurn(i.getPlayerName());
 			board.calcTargets(i.getRow(), i.getColumn(), roll);
-			BoardCell bc = i.pickLocation((HashSet<BoardCell>) board.getTargets());
-			i.makeMove(bc);
+			i.makeMove();
+
 		}
 	}
-	
+
 	public int rollDice() {
 		Random r = new Random();
 		int x = r.nextInt(6) + 1;
@@ -138,7 +160,7 @@ public class ClueGame extends JFrame{
 		board.setConfigFiles("BoardLayout.csv", "Legend.txt", "person.txt", "weapons.txt");	
 		board.initialize();
 		board.dealCards();
-		
+
 		ClueGame clueGame = new ClueGame();
 		JPanel cardPanel = clueGame.createCardPanel();
 		JPanel controlPanel = new JPanel();

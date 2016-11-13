@@ -15,8 +15,6 @@ public abstract class Player implements Comparable<Object>{
 	 protected Set<Card> seenCards;
 	 
 	 Board board = Board.getInstance();
-	 
-	 public boolean mustMove = false;
 
 	public Set<Card> getMyCards() {
 		return myCards;
@@ -93,11 +91,5 @@ public abstract class Player implements Comparable<Object>{
 	public abstract BoardCell pickLocation(HashSet<BoardCell> targets);
 	public abstract void setLastRoom(char lastRoom);
 	public abstract Solution createSuggestion();
-
-	public void makeMove(BoardCell bc) {
-		row = bc.getRow();
-		column = bc.getCol();
-		board.validate();
-		board.repaint();
-	}
+	public abstract void makeMove();
 }

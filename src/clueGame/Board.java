@@ -2,6 +2,9 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Field;
@@ -19,7 +22,7 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
-	public boolean highlight = false;
+	public boolean mustFinish = false;
 	//Size of board
 	private int numRows = 0;
 	private int numColumns = 0;
@@ -60,9 +63,11 @@ public class Board extends JPanel {
 		try{
 			loadRoomConfig();
 			loadBoardConfig();
-			loadWeaponsConfig();
-			loadPersonConfig();
-			makeSolution();
+			if (weaponsConfigFile != null) {
+				loadWeaponsConfig();
+				loadPersonConfig();
+				makeSolution();
+			}
 		}catch(FileNotFoundException | BadConfigFormatException e){
 			e.printStackTrace();
 		}
@@ -430,7 +435,7 @@ public class Board extends JPanel {
 		personConfigFile = personFile;
 		weaponsConfigFile = weaponFile;
 	}
-	
+
 	public void setConfigFiles(String boardFile, String roomFile) {
 		boardConfigFile = boardFile;
 		roomConfigFile = roomFile;
@@ -492,7 +497,7 @@ public class Board extends JPanel {
 	public Solution getTheAnswer() {
 		return theAnswer;
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -504,7 +509,7 @@ public class Board extends JPanel {
 		for (Player p: players) {
 			p.draw(g);
 		}
-		if (highlight) {
+		if (mustFinish) {
 			for (BoardCell c: targets) {
 				g.setColor(Color.MAGENTA);
 				g.fillRect(c.getCol() * 30, c.getRow() * 30, 30, 30);

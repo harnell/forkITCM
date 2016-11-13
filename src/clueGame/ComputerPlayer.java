@@ -23,7 +23,6 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public BoardCell pickLocation (HashSet<BoardCell> targets) {
-		board.highlight = false;
 		Set<BoardCell> priorityTargets = new HashSet<BoardCell>();
 		for (BoardCell b : targets){
 			if (!(b.getDoorDirection() == DoorDirection.NONE) && !(seenRooms.contains(b.getInitial())) && b.getInitial() != lastRoom && b.getInitial() != 'F'){
@@ -92,6 +91,16 @@ public class ComputerPlayer extends Player {
 		}
 		return null;
 	}
+	
+	@Override
+	public void makeMove() {
+		BoardCell bc = pickLocation((HashSet<BoardCell>) board.getTargets());
+		row = bc.getRow();
+		column = bc.getCol();
+		board.validate();
+		board.repaint();
+	}
+
 	
 	@Override
 	public void setLastRoom(char lastRoom) {
