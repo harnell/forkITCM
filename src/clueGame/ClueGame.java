@@ -38,25 +38,6 @@ public class ClueGame extends JFrame{
 	public ClueGame() {
 		setTitle("Clue");
 		setSize(975,900);
-		class pickLocationListener implements MouseListener {
-			public void mousePressed (MouseEvent event) {}
-			public void mouseReleased (MouseEvent event) {}
-			public void mouseEntered (MouseEvent event) {}
-			public void mouseExited (MouseEvent event) {}
-			public void mouseClicked (MouseEvent event) {
-				if (playerIndex % 6 == 0) {
-					Point spot = event.getPoint();
-					BoardCell moveHere = board.getCellAt(spot.y / 30, spot.x / 30);
-					if (board.getTargets().contains(moveHere)) {
-						((HumanPlayer) board.getPlayers().get(playerIndex)).finishTurn(moveHere);
-					}
-					else {
-						JOptionPane.showMessageDialog(ClueGame.theInstance, "Invalid square!", "Doh!", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		}
-		board.addMouseListener(new pickLocationListener());
 		add(board, BorderLayout.CENTER);
 		createMenu();
 	}
