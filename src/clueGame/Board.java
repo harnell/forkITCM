@@ -509,7 +509,7 @@ public class Board extends JPanel {
 		for (Player p: players) {
 			p.draw(g);
 		}
-		if (mustFinish) {
+		if (mustFinish) { // Highlight squares when it is human player's turn only, ie when the must finish flag is true
 			for (BoardCell c: targets) {
 				g.setColor(Color.MAGENTA);
 				g.fillRect(c.getCol() * 30, c.getRow() * 30, 30, 30);
