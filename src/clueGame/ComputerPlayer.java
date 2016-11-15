@@ -12,9 +12,6 @@ public class ComputerPlayer extends Player {
 	private Set<Character> seenRooms = new HashSet<Character>(0);
 	private char lastRoom = 'X';
 
-	private Solution accusation;
-	private Solution suggestion;
-
 	private Board board = Board.getInstance();
 	
 	public ComputerPlayer(String playerName, int row, int column, Color color) {

@@ -11,6 +11,8 @@ public abstract class Player implements Comparable<Object>{
 	 protected int row;
 	 protected int column;
 	 private Color color;
+	 protected Solution accusation;
+	 protected Solution suggestion;
 	 protected Set<Card> myCards;
 	 protected Set<Card> seenCards;
 	 

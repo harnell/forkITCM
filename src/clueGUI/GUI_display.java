@@ -21,7 +21,7 @@ public class GUI_display extends JPanel{
 	private Board board = Board.getInstance();
 	
 	private JPanel panel1 = new JPanel();
-	JTextField playerTurn = new JTextField(20);
+	private JTextField playerTurn = new JTextField(20);
 	
 	public JButton nextPlayer = new JButton("Next Player");
 	private JButton makeAccusation = new JButton("Make an Accusation");
@@ -43,6 +43,11 @@ public class GUI_display extends JPanel{
 		panel1.add(playerTurn);
 		add(panel1);
 		
+		playerTurn.setEditable(false);
+		rollNumber.setEditable(false);
+		guessInput.setEditable(false);
+		resultOutput.setEditable(false);
+		
 		//Second panel
 		class NextListener implements ActionListener {
 			@Override
@@ -54,6 +59,13 @@ public class GUI_display extends JPanel{
 		add(nextPlayer);
 		
 		//Third panel
+		class AccuseListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClueGame.theInstance.accusePlayer();
+			}
+		}
+		makeAccusation.addActionListener(new AccuseListener());
 		add(makeAccusation);
 		
 		//Fourth panel

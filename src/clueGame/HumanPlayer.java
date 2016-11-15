@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,7 +20,9 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public boolean makeAccusation() {
-		// TODO Auto-generated method stub
+		ClueGame.theInstance.accusePopUp(this);
+		//this.accusation = acc;
+		//boolean result = board.checkAccusation(accusation);
 		return false;
 	}
 
@@ -53,6 +56,22 @@ public class HumanPlayer extends Player {
 				JOptionPane.showMessageDialog(ClueGame.theInstance, "Invalid square!", "Doh!", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	public void setAccusation(String p, String r, String w) {
+		accusation = new Solution(p, r, w);
+	}
+	
+	public void setSuggestion(String p, String r, String w) {
+		suggestion = new Solution(p, r, w);
+	}
+	
+	public Solution getAccusation() {
+		return accusation;
+	}
+	
+	public Solution getSuggestion() {
+		return suggestion;
 	}
 	
 	public void finishTurn(BoardCell moveHere) {
