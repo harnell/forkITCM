@@ -2,9 +2,6 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Field;
@@ -15,7 +12,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -383,6 +379,12 @@ public class Board extends JPanel {
 		for (int i = startPlayerIndex; i != currentPlayerIndex;i = (i+1) % playas.size()){			//this for loop is used to simulate a queue
 			Card possibleDisproved = playas.get(i).disproveSuggestion(suggestion);
 			if (possibleDisproved != null){
+				for (int j = 0; j < playas.size(); j++){
+					playas.get(j).addCardToSeenCards(possibleDisproved);
+					if (possibleDisproved.getType().equals(CardType.ROOM) && playas.get(j).getClass() == ComputerPlayer.class){
+						((ComputerPlayer)playas.get(j)).addToSeenRooms(possibleDisproved.getInitial());
+					}
+				}
 				return possibleDisproved;
 			}
 		}

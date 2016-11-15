@@ -13,6 +13,7 @@ public class ComputerPlayer extends Player {
 	private char lastRoom = 'X';
 
 	private Solution accusation;
+
 	private Solution suggestion;
 
 	private Board board = Board.getInstance();
@@ -93,6 +94,9 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public void makeMove() {
+		if (seenCards.size() == 18){
+			makeAccusation();
+		}
 		BoardCell bc = pickLocation((HashSet<BoardCell>) board.getTargets());
 		row = bc.getRow();
 		column = bc.getCol();
@@ -106,5 +110,9 @@ public class ComputerPlayer extends Player {
 	
 	public Solution getSuggestion() {
 		return suggestion;
+	}
+	
+	public void addToSeenRooms(char room) {
+		this.seenRooms.add(room);
 	}
 }
