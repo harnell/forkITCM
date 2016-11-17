@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player {
 	
 	private Set<Character> seenRooms = new HashSet<Character>(0);
@@ -90,22 +92,50 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public void makeMove() {
-		if (seenCards.size() == 18){
-			makeAccusation();
+		if (seenCards.size() == 18 || shouldAccuse) {
+			if (shouldAccuse) {
+				accusation = accuseWithThis;
+				if (board.checkAccusation(accusation)) {
+					ClueGame.theInstance.EndGame(this);
+				}
+				else {
+					shouldAccuse = false;
+					JOptionPane.showMessageDialog(ClueGame.theInstance, getPlayerName() + " has made an incorrect accusation with " + accusation.toString() + "!", "Wrong!", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+			else if (makeAccusation()) {
+				ClueGame.theInstance.EndGame(this);
+			}
+			else {
+				JOptionPane.showMessageDialog(ClueGame.theInstance, getPlayerName() + " has made an incorrect accusation with " + accusation.toString() + "!", "Wrong!", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
+		
+		
 		BoardCell bc = pickLocation((HashSet<BoardCell>) board.getTargets());
 		row = bc.getRow();
 		column = bc.getCol();
 		board.validate();
 		board.repaint();
+		if (board.getCellAt(row, column).getInitial() != 'F') {
+			createSuggestion();
+			ClueGame.theInstance.gui.getGuessInput().setText(suggestion.toString());
+			Card disproved = board.handleSuggestion(suggestion, board.getPlayers(), board.getPlayers().indexOf(this));
+			if (disproved != null) {
+				shouldAccuse = false;
+				ClueGame.theInstance.gui.getResultOutput().setText(disproved.getCardName());
+			}
+			else {
+				shouldAccuse = true;
+				accuseWithThis = suggestion;
+				ClueGame.theInstance.gui.getResultOutput().setText("No New Clue");
+			}
+			ClueGame.theInstance.moveToRoom(this);
+		}
 	}
 
 	public void setLastRoom(char lastRoom) {
 		this.lastRoom = lastRoom;
-	}
-	
-	public Solution getSuggestion() {
-		return suggestion;
 	}
 	
 	public void addToSeenRooms(char room) {

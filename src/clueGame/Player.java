@@ -6,17 +6,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Player implements Comparable<Object>{
-	
-	 private String playerName;
-	 protected int row;
-	 protected int column;
-	 private Color color;
-	 protected Solution accusation;
-	 protected Solution suggestion;
-	 protected Set<Card> myCards;
-	 protected Set<Card> seenCards;
-	 
-	 Board board = Board.getInstance();
+
+	private String playerName;
+	protected int row;
+	protected int column;
+	private Color color;
+	protected Solution accusation;
+	protected Solution suggestion;
+	protected Set<Card> myCards;
+	protected Set<Card> seenCards;
+
+	protected static boolean shouldAccuse = false;
+	protected static Solution accuseWithThis;
+
+	Board board = Board.getInstance();
 
 	public Set<Card> getMyCards() {
 		return myCards;
@@ -47,7 +50,7 @@ public abstract class Player implements Comparable<Object>{
 	public int getRow() {
 		return row;
 	}
-	
+
 	public Color getColor() {
 		return color;
 	}
@@ -59,7 +62,7 @@ public abstract class Player implements Comparable<Object>{
 			}
 		}
 		return null;
-	 }
+	}
 
 
 	public int compareTo(Object p) {
@@ -76,7 +79,7 @@ public abstract class Player implements Comparable<Object>{
 	public void setSeenCards(Set<Card> seenCards) {
 		this.seenCards = seenCards;
 	}
-	
+
 	public void draw(Graphics g){
 		g.setColor(color);
 		g.fillOval(column * 30, row * 30, 29, 29);
@@ -88,4 +91,20 @@ public abstract class Player implements Comparable<Object>{
 	public abstract boolean makeAccusation();
 	public abstract Solution createSuggestion();
 	public abstract void makeMove();
+
+	public Solution getAccusation() {
+		return accusation;
+	}
+
+	public Solution getSuggestion() {
+		return suggestion;
+	}
+
+	public void setRow(int r) {
+		row = r;
+	}
+
+	public void setCol(int c) {
+		column = c;
+	}
 }

@@ -23,17 +23,17 @@ public class GUI_display extends JPanel{
 	private JPanel panel1 = new JPanel();
 	private JTextField playerTurn = new JTextField(20);
 	
-	public JButton nextPlayer = new JButton("Next Player");
+	private JButton nextPlayer = new JButton("Next Player");
 	private JButton makeAccusation = new JButton("Make an Accusation");
 	
 	private JPanel panel4 = new JPanel();
 	private JTextField rollNumber = new JTextField(4);
 	
 	private JPanel panel5 = new JPanel();
-	private JTextField guessInput = new JTextField(20);
+	private JTextField guessInput = new JTextField(25);
 	
 	private JPanel panel6 = new JPanel();
-	private JTextField resultOutput = new JTextField(20);
+	private JTextField resultOutput = new JTextField(15);
 	
 	public GUI_display (){
 		setLayout(new GridLayout(2,3));
@@ -98,6 +98,14 @@ public class GUI_display extends JPanel{
 	public void setWhoseTurn(String s) {
 		playerTurn.setText(s);
 		ClueGame.theInstance.revalidate();
+	}
+
+	public JTextField getGuessInput() {
+		return guessInput;
+	}
+
+	public JTextField getResultOutput() {
+		return resultOutput;
 	}
 
 }

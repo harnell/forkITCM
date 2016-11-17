@@ -40,7 +40,7 @@ public class ClueGame extends JFrame{
 
 	public ClueGame() {
 		setTitle("Clue");
-		setSize(975,900);
+		setSize(1200,900);
 		add(board, BorderLayout.CENTER);
 		createMenu();
 	}
@@ -80,7 +80,6 @@ public class ClueGame extends JFrame{
 	}
 
 	private JPanel createCardPanel() {
-		JPanel tframe = new JPanel();
 		JPanel tpanel = new JPanel();
 		tpanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 		tpanel.setLayout(new GridLayout(3,1));
@@ -112,8 +111,7 @@ public class ClueGame extends JFrame{
 		tpanel.add(ppanel);
 		tpanel.add(rpanel);
 		tpanel.add(wpanel);
-		tframe.add(tpanel);
-		return tframe;
+		return tpanel;
 	}
 
 
@@ -204,6 +202,7 @@ public class ClueGame extends JFrame{
 				String room = r;
 				String weapon = (String) wcombo.getSelectedItem();
 				((HumanPlayer) p).setSuggestion(person, room, weapon);
+				((HumanPlayer) p).createSuggestion();
 				suggest.setVisible(false);
 			}
 		}
@@ -307,6 +306,19 @@ public class ClueGame extends JFrame{
 			JOptionPane.showMessageDialog(ClueGame.theInstance, p.getPlayerName() + " has won Clue!", "Better luck next time...", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
+	public void moveToRoom(Player p) {
+		Solution sol = p.getSuggestion();
+		System.out.println(sol.toString());
+		for (Player i: board.getPlayers()) {
+			if (sol.person.equals(i.getPlayerName())) {
+				System.out.println(i.getPlayerName());
+				i.setRow(p.getRow());
+				i.setCol(p.getColumn());
+			}
+		}
+		
+	}
 
 	public static void main(String[] args) {
 		// Setting up game
@@ -317,7 +329,8 @@ public class ClueGame extends JFrame{
 		ClueGame clueGame = new ClueGame();
 		JPanel cardPanel = clueGame.createCardPanel();
 		JPanel controlPanel = new JPanel();
-		controlPanel.add(gui, BorderLayout.CENTER);
+		controlPanel.setLayout(new GridLayout(1,1));
+		controlPanel.add(gui);
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Control Panel"));
 
 		clueGame.add(cardPanel, BorderLayout.EAST);

@@ -21,6 +21,7 @@ public class HumanPlayer extends Player {
 	@Override
 	public boolean makeAccusation() {
 		ClueGame.theInstance.accusePopUp(this);
+
 		//this.accusation = acc;
 		//boolean result = board.checkAccusation(accusation);
 		return false;
@@ -28,9 +29,21 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public Solution createSuggestion() {
-		return null;
-		// TODO Auto-generated method stub
-
+		ClueGame.theInstance.gui.getGuessInput().setText(suggestion.toString());
+		Card disproved = board.handleSuggestion(suggestion, board.getPlayers(), board.getPlayers().indexOf(this));
+		if (disproved != null) {
+			shouldAccuse = false;
+			ClueGame.theInstance.gui.getResultOutput().setText(disproved.getCardName());
+		}
+		else {
+			shouldAccuse = true;
+			accuseWithThis = suggestion;
+			ClueGame.theInstance.gui.getResultOutput().setText("No New Clue");
+		}
+		ClueGame.theInstance.moveToRoom(this);
+		board.validate();
+		board.repaint();
+		return suggestion;
 	}
 	
 	@Override
@@ -64,14 +77,6 @@ public class HumanPlayer extends Player {
 	
 	public void setSuggestion(String p, String r, String w) {
 		suggestion = new Solution(p, r, w);
-	}
-	
-	public Solution getAccusation() {
-		return accusation;
-	}
-	
-	public Solution getSuggestion() {
-		return suggestion;
 	}
 	
 	public void finishTurn(BoardCell moveHere) {
