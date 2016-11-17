@@ -19,6 +19,7 @@ public class Board extends JPanel {
 	private static final int MAX_BOARD_SIZE = 50;
 	private static final String WALKWAY_NAME = "Walkway";
 	public boolean mustFinish = false;
+	public boolean mustSuggest = false;
 	//Size of board
 	private int numRows = 0;
 	private int numColumns = 0;

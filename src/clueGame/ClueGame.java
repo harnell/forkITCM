@@ -113,7 +113,7 @@ public class ClueGame extends JFrame{
 	public void nextPlayer() {
 		ArrayList<Player> players = board.getPlayers();
 		Player i = players.get(playerIndex % players.size());
-		if (board.mustFinish) {
+		if (board.mustFinish || board.mustSuggest) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You must finish your turn!", "Wait!", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
@@ -201,6 +201,7 @@ public class ClueGame extends JFrame{
 				String weapon = (String) wcombo.getSelectedItem();
 				((HumanPlayer) p).setSuggestion(person, room, weapon);
 				((HumanPlayer) p).createSuggestion();
+				board.mustSuggest = false;
 				suggest.setVisible(false);
 			}
 		}
@@ -208,6 +209,7 @@ public class ClueGame extends JFrame{
 		class CancelListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				board.mustSuggest = false;
 				suggest.setVisible(false);
 			}
 		}
@@ -315,10 +317,8 @@ public class ClueGame extends JFrame{
 	
 	public void moveToRoom(Player p) {
 		Solution sol = p.getSuggestion();
-		System.out.println(sol.toString());
 		for (Player i: board.getPlayers()) {
 			if (sol.person.equals(i.getPlayerName())) {
-				System.out.println(i.getPlayerName());
 				i.setRow(p.getRow());
 				i.setCol(p.getColumn());
 			}
