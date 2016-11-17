@@ -81,6 +81,9 @@ public class HumanPlayer extends Player {
 		board.mustFinish = false;
 		board.validate();
 		board.repaint();
+		if (board.getCellAt(row, column).getInitial() != 'F') {
+			ClueGame.theInstance.suggestPopUp(this);
+		}
 	}
 
 }
