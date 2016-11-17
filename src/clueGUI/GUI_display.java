@@ -11,14 +11,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import clueGame.Board;
+//import clueGame.Board;
 import clueGame.ClueGame;
 
 
 @SuppressWarnings("serial")
 public class GUI_display extends JPanel{
 
-	private Board board = Board.getInstance();
+	//private Board board = Board.getInstance();
 	
 	private JPanel panel1 = new JPanel();
 	private JTextField playerTurn = new JTextField(20);

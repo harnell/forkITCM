@@ -1,18 +1,16 @@
 package clueGame;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
 public class HumanPlayer extends Player {
 	private pickLocationListener ml = new pickLocationListener();
 	
+	private boolean accuseStatus = false;
 
 	public HumanPlayer(String playerName, int row, int column, Color color) {
 		super(playerName, row, column, color);
@@ -23,22 +21,21 @@ public class HumanPlayer extends Player {
 		ClueGame.theInstance.accusePopUp(this);
 
 		//this.accusation = acc;
-		//boolean result = board.checkAccusation(accusation);
 		return false;
 	}
 
 	@Override
 	public Solution createSuggestion() {
-		ClueGame.theInstance.gui.getGuessInput().setText(suggestion.toString());
+		ClueGame.gui.getGuessInput().setText(suggestion.toString());
 		Card disproved = board.handleSuggestion(suggestion, board.getPlayers(), board.getPlayers().indexOf(this));
 		if (disproved != null) {
 			shouldAccuse = false;
-			ClueGame.theInstance.gui.getResultOutput().setText(disproved.getCardName());
+			ClueGame.gui.getResultOutput().setText(disproved.getCardName());
 		}
 		else {
 			shouldAccuse = true;
 			accuseWithThis = suggestion;
-			ClueGame.theInstance.gui.getResultOutput().setText("No New Clue");
+			ClueGame.gui.getResultOutput().setText("No New Clue");
 		}
 		ClueGame.theInstance.moveToRoom(this);
 		board.validate();
@@ -79,11 +76,20 @@ public class HumanPlayer extends Player {
 		suggestion = new Solution(p, r, w);
 	}
 	
+	public boolean hasAccused() {
+		return accuseStatus;
+	}
+
+	public void setAccuseStatus(boolean accuseStatus) {
+		this.accuseStatus = accuseStatus;
+	}
+	
 	public void finishTurn(BoardCell moveHere) {
 		board.removeMouseListener(ml);
 		row = moveHere.getRow();
 		column = moveHere.getCol();
 		board.mustFinish = false;
+		accuseStatus = false;
 		board.validate();
 		board.repaint();
 		if (board.getCellAt(row, column).getInitial() != 'F') {

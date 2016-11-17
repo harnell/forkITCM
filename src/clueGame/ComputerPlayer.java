@@ -119,16 +119,16 @@ public class ComputerPlayer extends Player {
 		board.repaint();
 		if (board.getCellAt(row, column).getInitial() != 'F') {
 			createSuggestion();
-			ClueGame.theInstance.gui.getGuessInput().setText(suggestion.toString());
+			ClueGame.gui.getGuessInput().setText(suggestion.toString());
 			Card disproved = board.handleSuggestion(suggestion, board.getPlayers(), board.getPlayers().indexOf(this));
 			if (disproved != null) {
 				shouldAccuse = false;
-				ClueGame.theInstance.gui.getResultOutput().setText(disproved.getCardName());
+				ClueGame.gui.getResultOutput().setText(disproved.getCardName());
 			}
 			else {
 				shouldAccuse = true;
 				accuseWithThis = suggestion;
-				ClueGame.theInstance.gui.getResultOutput().setText("No New Clue");
+				ClueGame.gui.getResultOutput().setText("No New Clue");
 			}
 			ClueGame.theInstance.moveToRoom(this);
 		}
