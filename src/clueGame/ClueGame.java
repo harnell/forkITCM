@@ -314,6 +314,9 @@ public class ClueGame extends JFrame{
 		else {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, p.getPlayerName() + " has won Clue!", "Better luck next time...", JOptionPane.INFORMATION_MESSAGE);
 		}
+		
+		// Remove functionality of the buttons, replace with prompt that game is over
+		gui.removeButtons();
 	}
 	
 	public void moveToRoom(Player p) {

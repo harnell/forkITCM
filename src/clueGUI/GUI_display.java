@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -17,6 +18,20 @@ import clueGame.ClueGame;
 
 @SuppressWarnings("serial")
 public class GUI_display extends JPanel{
+	
+	private class NextListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ClueGame.theInstance.nextPlayer();
+		}
+	}
+	
+	private class AccuseListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ClueGame.theInstance.accusePlayer();
+		}
+	}
 
 	//private Board board = Board.getInstance();
 	
@@ -24,7 +39,10 @@ public class GUI_display extends JPanel{
 	private JTextField playerTurn = new JTextField(20);
 	
 	private JButton nextPlayer = new JButton("Next Player");
+	private NextListener nextL = new NextListener();
+	
 	private JButton makeAccusation = new JButton("Make an Accusation");
+	private AccuseListener accuseL = new AccuseListener();
 	
 	private JPanel panel4 = new JPanel();
 	private JTextField rollNumber = new JTextField(4);
@@ -49,23 +67,11 @@ public class GUI_display extends JPanel{
 		resultOutput.setEditable(false);
 		
 		//Second panel
-		class NextListener implements ActionListener {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ClueGame.theInstance.nextPlayer();
-			}
-		}
-		nextPlayer.addActionListener(new NextListener());
+		nextPlayer.addActionListener(nextL);
 		add(nextPlayer);
 		
 		//Third panel
-		class AccuseListener implements ActionListener {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ClueGame.theInstance.accusePlayer();
-			}
-		}
-		makeAccusation.addActionListener(new AccuseListener());
+		makeAccusation.addActionListener(accuseL);
 		add(makeAccusation);
 		
 		//Fourth panel
@@ -106,6 +112,21 @@ public class GUI_display extends JPanel{
 
 	public JTextField getResultOutput() {
 		return resultOutput;
+	}
+	
+	public void removeButtons() {
+		nextPlayer.removeActionListener(nextL);
+		makeAccusation.removeActionListener(accuseL);
+		
+		class DoneListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(ClueGame.theInstance, "The game is over!", "Done!", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		
+		nextPlayer.addActionListener(new DoneListener());
+		makeAccusation.addActionListener(new DoneListener());
 	}
 
 }
