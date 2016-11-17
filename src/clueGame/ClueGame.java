@@ -141,11 +141,11 @@ public class ClueGame extends JFrame{
 		if (index != 0) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You can only accuse on your turn!", "Not your turn!", JOptionPane.ERROR_MESSAGE);
 		}
-		else if (!board.mustFinish) {
-			JOptionPane.showMessageDialog(ClueGame.theInstance, "You can only accuse at the beginning of your turn!", "Wait a bit!", JOptionPane.ERROR_MESSAGE);
-		}
 		else if (((HumanPlayer) board.getPlayers().get(index)).hasAccused()) {
 			JOptionPane.showMessageDialog(ClueGame.theInstance, "You have already accused this turn!", "Already accused!", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (!board.mustFinish) {
+			JOptionPane.showMessageDialog(ClueGame.theInstance, "You can only accuse at the beginning of your turn!", "Wait a bit!", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			((HumanPlayer) board.getPlayers().get(index)).makeAccusation();
@@ -281,6 +281,7 @@ public class ClueGame extends JFrame{
 				else {
 					JOptionPane.showMessageDialog(ClueGame.theInstance, "Your accusation was not correct.", "Accusation Incorrect!", JOptionPane.INFORMATION_MESSAGE);
 					((HumanPlayer) p).setAccuseStatus(true);
+					((HumanPlayer) p).finishTurn();
 				}
 				accuse.setVisible(false);
 			}

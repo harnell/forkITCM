@@ -46,6 +46,7 @@ public class HumanPlayer extends Player {
 	@Override
 	public void makeMove() {
 		board.mustFinish = true;
+		accuseStatus = false;
 		board.validate();
 		board.repaint();
 		board.addMouseListener(ml);
@@ -89,13 +90,19 @@ public class HumanPlayer extends Player {
 		row = moveHere.getRow();
 		column = moveHere.getCol();
 		board.mustFinish = false;
-		accuseStatus = false;
 		board.validate();
 		board.repaint();
 		if (board.getCellAt(row, column).getInitial() != 'F') {
 			ClueGame.theInstance.suggestPopUp(this);
 			board.mustSuggest = true;
 		}
+	}
+	
+	public void finishTurn() {
+		board.removeMouseListener(ml);
+		board.mustFinish = false;
+		board.validate();
+		board.repaint();
 	}
 
 }
